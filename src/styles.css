@@ -1,0 +1,171 @@
+body{
+    background-color: #FAFAFB;
+}
+
+.main {
+    display: flex;
+    flex-direction: row;
+}
+
+.leftLogin {
+    position: absolute;
+    left: 0;
+    width: 40vw;
+    height: 100vh;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.email,
+.password {
+    border-radius: 4px;
+    border-style: solid;
+    width: 345px;
+    gap: 3px;
+    padding: 16px 0px 16px 0px;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    border-color: rgba(0, 0, 0, 0.23);
+    margin-bottom: 1.7rem;
+    padding-left: 1rem;
+}
+
+.loginbtn {
+    /* display: inline-flex;
+    padding: 15px 25px;
+    align-items: center; */
+    
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    background: #ff685b;
+    padding: 12px 23px 13px 23px;
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    align-items: center;
+    color: #ffffff;
+}
+
+.loginId {
+    display: flex;
+    width: 344px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    background: #000;
+
+    /* Elevation/2 */
+    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+    color: rgba(255, 255, 255, 0.87);
+
+    font-feature-settings: "liga" off, "clig" off;
+    /* Components/Button Large */
+    font-family: Roboto;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 26px;
+    /* 173.333% */
+    letter-spacing: 0.46px;
+    text-transform: uppercase;
+}
+
+/* .rightLogin {
+    width: 100vw;
+    height: 100vh;
+    flex-shrink: 0;
+    background: #FAFAFB;
+    
+    lightgray 50% / cover no-repeat 
+}*/
+
+
+/* .img1 {
+    position: relative;
+    object-fit:fill;
+    display: flex;
+    align-items: center;
+    background-image: url(assets/LoginImg.png);
+    z-index: 10;
+} */
+
+.img1{
+    position: absolute;
+    right: 1rem;
+    top: 5rem;
+    height: 77vh;
+    width: 50vw;
+    background: url(assets/LoginImg.png); 
+    background-repeat: no-repeat;
+    z-index: 10;
+    
+}
+
+.forgotPassword {
+    color: var(--Text-Primary, rgba(0, 0, 0, 0.87));
+    font-feature-settings: 'liga' off, 'clig' off;
+
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 157%;
+    letter-spacing: 0.1px;
+}
+
+.btnFP {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.7rem;
+}
+
+.login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.signIn {
+    color:  #ff685b;
+    text-align: left;
+    font-family: "Roboto-Medium", sans-serif;
+    font-size: 20px;
+    line-height: 160%;
+    letter-spacing:  0.15px;
+    font-weight: 500;
+    align-self: self-start;
+    margin-bottom: 2rem
+    
+}
+
+.logo{
+    position: absolute;
+    left: 4rem;
+    top:2rem;
+    color:  #252b42;
+    font-family:  "Montserrat-Bold", sans-serif;
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: 0.1px;
+    font-weight: 700;
+}
+
+
+@media only screen and (max-width: 1160px){
+    .img1{
+        display: none;
+    }
+    .leftLogin{
+        display: flex;
+        width: 100vw;
+    }
+}
