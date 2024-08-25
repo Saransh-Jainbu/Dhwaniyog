@@ -2,7 +2,7 @@ import React from 'react';
 import img from './assets/login.png';
 
 
-function Login() {
+function StuLogin() {
     return (
         <>
         <div className="flex flex-row h-screen ml-[310px]">
@@ -47,7 +47,7 @@ function Login() {
                             </div>
                         </div>
                         <button className="w-[400px] flex justify-center items-center bg-black text-white text-sm font-medium uppercase tracking-[0.46px] py-3 rounded shadow-md font-roboto">
-                            Student Login
+                            Supervisor Login
                         </button>
                     
                 </div>
@@ -65,4 +65,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default StuLogin;
