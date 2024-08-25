@@ -1,21 +1,18 @@
-import { useState } from 'react'
-import './App.css'
-import Navbar from './Navbar'
-import Hero from './Hero'
-import CardGrid from './Card'
-import Footer from './Footer'
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Dashboard from "./Dashboard";  
+import Home from "./Home";
+import "./index.css";
 
 function App() {
-  return(
-  <>
-      <Navbar />
-      <Hero />
-      <CardGrid />
-      <Footer />
-
-  </>
-   )
-  
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
