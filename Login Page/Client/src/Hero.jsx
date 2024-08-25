@@ -27,12 +27,12 @@ const Hero = () => {
 
       
       <div className="relative flex-shrink-0 w-[500px] h-auto">
-        <img
+        <img draggable="false"
           src={backgroundImage}
           alt="Background"
           className="absolute top-0 left-0 w-full h-full object-cover"
         />
-        <img
+        <img draggable="false"
           src={heroImage}
           alt="Hero"
           className="relative z-10 w-full h-auto"

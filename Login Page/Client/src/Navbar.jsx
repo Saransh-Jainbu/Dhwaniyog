@@ -4,7 +4,7 @@ const Navbar = () => {
   return (
     <div className='flex p-4 mt-4 justify-between'>
       <div className='flex ml-24 font-montserrat text-2xl font-bold tracking-wide'>
-        DHWANI
+        DHWANIयोग
       </div>
 
       <button className='flex mr-40 bg-[#FF685B] py-2.5 px-5 items-center rounded-md tracking-wide font-bold font-montserrat text-white text-sm not-italic space-x-2.5'>
