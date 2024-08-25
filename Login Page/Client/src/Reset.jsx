@@ -1,9 +1,10 @@
 import React from 'react'
 import Heading from './Heading'
-
+import { useNavigate } from 'react-router-dom'
 
 const Reset = () => {
-  return (
+const navigate = useNavigate();
+    return (
     <>
     <Heading />
     <div className='flex w-screen h-[80vh] justify-center items-center'>
@@ -17,7 +18,7 @@ const Reset = () => {
           <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
         </svg>
         </button>
-        <button className='w-[400px] flex justify-center items-center bg-black text-white text-sm font-medium uppercase tracking-[0.46px] py-3 rounded shadow-md font-roboto'>Back to Login</button>
+        <button onClick={() => navigate("/studentlogin")} className='w-[400px] flex justify-center items-center bg-black text-white text-sm font-medium uppercase tracking-[0.46px] py-3 rounded shadow-md font-roboto'>Back to Login</button>
         </div>
     </div>
 
