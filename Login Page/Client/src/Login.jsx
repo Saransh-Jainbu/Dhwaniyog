@@ -1,8 +1,10 @@
 import React from 'react';
 import img from './assets/login.png';
+import { useNavigate } from 'react-router-dom';
 
 
 function Login() {
+    const navigate = useNavigate();
     return (
         <>
         <div className="flex flex-row h-screen ml-[310px]">
@@ -42,9 +44,9 @@ function Login() {
                                 </svg>
                             </button>
 
-                            <div className='text-[#000000DE] text-xl font-bold font-roboto ml-20'>
+                            <button onClick={() => navigate("/forgotpassword")} className='text-[#000000DE] text-xl font-bold font-roboto ml-20'>
                                 Forgot your password?
-                            </div>
+                            </button>
                         </div>
                         <button className="w-[400px] flex justify-center items-center bg-black text-white text-sm font-medium uppercase tracking-[0.46px] py-3 rounded shadow-md font-roboto">
                             Student Login
