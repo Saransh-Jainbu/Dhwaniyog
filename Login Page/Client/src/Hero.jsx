@@ -1,8 +1,10 @@
 import React from 'react';
 import heroImage from './assets/Hero.png';
 import backgroundImage from './assets/bg_img.jpg'
+import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
+  const navigate = useNavigate();
   return (
     <div className="flex items-center justify-between px-28 py-20 bg-white">
       
@@ -20,7 +22,7 @@ const Hero = () => {
           <span className="block">discover your most beautiful smile</span>
         </div>
 
-        <button className="mt-8 bg-[#FF685B] py-3 px-6 rounded-md tracking-wide font-bold font-montserrat text-white text-sm w-[300px]">
+        <button onClick={() => navigate("/login")} className="mt-8 bg-[#FF685B] py-3 px-6 rounded-md tracking-wide font-bold font-montserrat text-white text-sm w-[300px]">
           Login
         </button>
       </div>

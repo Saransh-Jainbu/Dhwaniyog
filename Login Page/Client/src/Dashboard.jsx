@@ -14,7 +14,7 @@ const Dashboard = () => {
         </svg>
         <h2 className="text-2xl font-bold mb-4">Dashboard</h2>
         </Link>
-        <Link to="/dashboard" className="flex items-center text-gray-700 hover:text-black">
+        <Link to="/dashboard" className="flex mt-6 items-center text-gray-700 hover:text-black">
           <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
           </svg>
