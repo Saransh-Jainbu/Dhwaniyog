@@ -3,11 +3,12 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Dashboard from "./Dashboard";  
 import Home from "./Home";
 import "./index.css";
-import Login from "./Login";
-import StuLogin from "./StuLogin";
+import Login from "./StudentLogin";
+import StuLogin from "./TherapistLogin";
 import Reset from "./Reset";
 import ResetPassword from "./ResetPassword";
 import Recovery from "./Recovery";
+import StudentDashboard from "./StudentDashboard";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/forgotpassword" element={<Reset/>} />
         <Route path="/resetpassword" element={<ResetPassword/>} />
         <Route path="/recovery" element={<Recovery/>} />
+        <Route path="/studentdashboard" element={<StudentDashboard/>} />
       </Routes>
     </Router>
   );

@@ -4,6 +4,7 @@ import Hero from './Hero'
 import CardGrid from './Card'
 import Footer from './Footer'
 
+
 const Home = () => {
   return (
     <>
@@ -11,6 +12,7 @@ const Home = () => {
         <Hero />
         <CardGrid />
         <Footer />
+
     </>
   )
 }
