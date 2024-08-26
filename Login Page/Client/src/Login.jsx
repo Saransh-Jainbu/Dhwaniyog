@@ -9,9 +9,9 @@ function Login() {
         <>
         <div className="flex flex-row h-screen ml-[310px]">
             <div className="flex-1 h-full bg-white flex flex-col items-center justify-center">
-                <div className="absolute left-24 top-8 text-[#252b42] font-bold text-2xl leading-8 tracking-[0.1px] font-montserrat">
+                <button onClick={()=> navigate("/")} className="absolute left-24 top-8 text-[#252b42] font-bold text-2xl leading-8 tracking-[0.1px] font-montserrat">
                 DHWANIयोग
-                </div>
+                </button>
                 <div className="flex flex-col items-center">
                     <h2 className="text-[#ff685b] text-3xl font-montserrat self-start mb-8 font-extrabold">
                         Sign in
@@ -48,8 +48,8 @@ function Login() {
                                 Forgot your password?
                             </button>
                         </div>
-                        <button className="w-[400px] flex justify-center items-center bg-black text-white text-sm font-medium uppercase tracking-[0.46px] py-3 rounded shadow-md font-roboto">
-                            Student Login
+                        <button onClick ={()=>navigate("/therapistlogin")} className="w-[400px] flex justify-center items-center bg-black text-white text-sm font-medium uppercase tracking-[0.46px] py-3 rounded shadow-md font-roboto">
+                            Switch to Supervisor Login
                         </button>
                     
                 </div>

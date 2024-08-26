@@ -22,7 +22,7 @@ const Hero = () => {
           <span className="block">discover your most beautiful smile</span>
         </div>
 
-        <button onClick={() => navigate("/login")} className="mt-8 bg-[#FF685B] py-3 px-6 rounded-md tracking-wide font-bold font-montserrat text-white text-sm w-[300px]">
+        <button onClick={() => navigate("/studentlogin")} className="mt-8 bg-[#FF685B] py-3 px-6 rounded-md tracking-wide font-bold font-montserrat text-white text-sm w-[300px]">
           Login
         </button>
       </div>
