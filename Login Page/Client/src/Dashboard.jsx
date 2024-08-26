@@ -1,18 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import dashboard_1 from './assets/dashboard_1.jpeg';
 
 const Dashboard = () => {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    gender: '',
+    age: '',
+    email: '',
+    address: '',
+    contactNumber: '',
+    appointTo: '',
+    category: '',
+    problem: ''
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:5000/add-patient', formData);
+      console.log(response.data);
+      // Handle successful response, e.g., show a success message or redirect
+    } catch (error) {
+      console.error('Error adding patient:', error);
+      // Handle error response
+    }
+  };
+
   return (
     <div className="flex">
-      
       <div className="w-64 bg-gray-100 h-screen p-4">
-
         <Link to="/" className="flex items-center text-gray-700 hover:text-black">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="size-5 mb-4 mr-2">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="size-5 mb-4 mr-2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-        </svg>
-        <h2 className="text-2xl font-bold mb-4">Dashboard</h2>
+          </svg>
+          <h2 className="text-2xl font-bold mb-4">Dashboard</h2>
         </Link>
         <Link to="/dashboard" className="flex mt-6 items-center text-gray-700 hover:text-black">
           <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -21,7 +52,7 @@ const Dashboard = () => {
           Add Patient
         </Link>
       </div>
-      
+
       <div className="flex-1 p-8">
         <div className="max-w-2xl mx-auto">
           <div className="flex justify-between items-center mb-6">
@@ -31,35 +62,38 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <div className="grid grid-cols-2 gap-4">
-              <input type="text" placeholder="First Name" className="border p-2 rounded" />
-              <input type="text" placeholder="Last Name" className="border p-2 rounded" />
+              <input type="text" name="firstName" placeholder="First Name" className="border p-2 rounded" value={formData.firstName} onChange={handleChange} />
+              <input type="text" name="lastName" placeholder="Last Name" className="border p-2 rounded" value={formData.lastName} onChange={handleChange} />
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <select className="border p-2 rounded">
-                <option>Male</option>
-                <option>Female</option>
+              <select name="gender" className="border p-2 rounded" value={formData.gender} onChange={handleChange}>
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
               </select>
-              <select className="border p-2 rounded">
-  <option value="" disabled selected>Select Age</option>
-  {[...Array(100)].map((_, i) => (
-    <option key={i} value={i + 1}>{i + 1}</option>
-  ))}
-</select>
+              <select name="age" className="border p-2 rounded" value={formData.age} onChange={handleChange}>
+                <option value="" disabled>Select Age</option>
+                {[...Array(100)].map((_, i) => (
+                  <option key={i} value={i + 1}>{i + 1}</option>
+                ))}
+              </select>
             </div>
-            <input type="email" placeholder="Email" className="border p-2 rounded w-full" />
-            <input type="text" placeholder="Address" className="border p-2 rounded w-full" />
-            <input type="tel" placeholder="Contact Number" className="border p-2 rounded w-full" />
+            <input type="email" name="email" placeholder="Email" className="border p-2 rounded w-full" value={formData.email} onChange={handleChange} />
+            <input type="text" name="address" placeholder="Address" className="border p-2 rounded w-full" value={formData.address} onChange={handleChange} />
+            <input type="tel" name="contactNumber" placeholder="Contact Number" className="border p-2 rounded w-full" value={formData.contactNumber} onChange={handleChange} />
             <div className="grid grid-cols-2 gap-4">
-              <select className="border p-2 rounded">
-                <option>Appoint To</option>
+              <select name="appointTo" className="border p-2 rounded" value={formData.appointTo} onChange={handleChange}>
+                <option value="">Appoint To</option>
+                {/* Add options dynamically if needed */}
               </select>
-              <select className="border p-2 rounded">
-                <option>Category</option>
+              <select name="category" className="border p-2 rounded" value={formData.category} onChange={handleChange}>
+                <option value="">Category</option>
+                {/* Add options dynamically if needed */}
               </select>
             </div>
-            <textarea placeholder="Problem" className="border p-2 rounded w-full h-24"></textarea>
+            <textarea name="problem" placeholder="Problem" className="border p-2 rounded w-full h-24" value={formData.problem} onChange={handleChange}></textarea>
             <button type="submit" className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Add User</button>
           </form>
         </div>
