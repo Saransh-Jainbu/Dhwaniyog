@@ -29,10 +29,8 @@ const Dashboard = () => {
     try {
       const response = await axios.post('http://localhost:5000/add-patient', formData);
       console.log(response.data);
-      // Handle successful response, e.g., show a success message or redirect
     } catch (error) {
       console.error('Error adding patient:', error);
-      // Handle error response
     }
   };
 
