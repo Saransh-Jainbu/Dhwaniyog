@@ -1,6 +1,9 @@
 import React from "react";
+import VerticalLine from "./VerticalLine";
+import { useNavigate } from "react-router-dom";
 
 function StudentDashboard() {
+  const navigate = useNavigate();
   const patients = [
     {
       name: "Robert Whitstable",
@@ -67,7 +70,7 @@ function StudentDashboard() {
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Patients</h2>
           <div className="flex items-center space-x-4">
-            <button className="bg-red-500 text-white px-4 py-2 rounded">
+            <button onClick={()=> navigate("/dashboard")} className="bg-red-500 text-white px-4 py-2 rounded">
               New Patient
             </button>
             <button className="bg-white text-black px-4 py-2 rounded">
@@ -128,7 +131,7 @@ function StudentDashboard() {
           </div>
         </div>
 
-        <div className="grid grid-cols-4 gap-6">
+        <div className="grid grid-cols-3 gap-6">
           {patients.map((patient, index) => (
             <div key={index} className="bg-white p-4 rounded-2xl shadow">
               <img
@@ -140,10 +143,10 @@ function StudentDashboard() {
                 {patient.name}
               </h3>
               <p className="text-center text-gray-500">{patient.problem}</p>
-              <div className="mt-4 text-center">
-                <p>Sessions: {patient.sessions}</p>
-                <p>Case Status: {patient.status}</p>
-                <p>Allotted To: {patient.assignedTo}</p>
+              <div className="mt-4 text-center justify-between flex flex-row">
+                <p ><span className="font-bold">Sessions </span><br/>  {patient.sessions}</p> <VerticalLine  />
+                <p ><span className="font-bold">Case Status </span><br/> {patient.status}</p> <VerticalLine  />
+                <p ><span className="font-bold">Allotted To </span><br/> <span className="">{patient.assignedTo}</span></p>
               </div>
               <div className="mt-4 flex justify-between">
                 <button className="bg-gray-200 text-black px-4 py-2 rounded-3xl">
