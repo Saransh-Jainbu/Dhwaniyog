@@ -16,8 +16,11 @@ const AddPatient = () => {
     address: '',
     contactNumber: '',
     appointTo: '',
+    appointBy: '',
     category: '',
-    problem: ''
+    problem: '',
+    sessions: 0,
+    image: ''
   });
 
   const handleChange = (e) => {
