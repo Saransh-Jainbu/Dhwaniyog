@@ -8,7 +8,7 @@ import StuLogin from "./TherapistLogin";
 import Reset from "./Reset";
 import ResetPassword from "./ResetPassword";
 import Recovery from "./Recovery";
-// import StudentDashboard from "./StudentDashboard";
+
 import TherapistDashboard from "./TherapistDashboard";
 
 
@@ -23,7 +23,7 @@ function App() {
         <Route path="/forgotpassword" element={<Reset/>} />
         <Route path="/resetpassword" element={<ResetPassword/>} />
         <Route path="/recovery" element={<Recovery/>} />
-        {/* <Route path="/studentdashboard" element={<StudentDashboard/>} /> */}
+        <Route path="/studentdashboard" element={<AddPatient/>} />
         <Route path="/therapistdashboard" element={<TherapistDashboard/>} />
       </Routes>
     </Router>
