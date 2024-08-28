@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom';
 import dashboard_1 from './assets/dashboard_1.jpeg';
 import axios from 'axios';
 
-const Dashboard = () => {
+
+
+const AddPatient = () => {
+  
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -27,23 +30,26 @@ const Dashboard = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/add-patient', formData);
+      const response = await axios.post('http://localhost:5000/addpatient', formData);
       console.log(response.data);
     } catch (error) {
       console.error('Error adding patient:', error);
     }
   };
-
+    
+    
+  
   return (
+    
     <div className="flex">
       <div className="w-64 bg-gray-100 h-screen p-4">
-        <Link to="/studentdashboard" className="flex items-center text-gray-700 hover:text-black">
+        <Link to="/therapistdashboard" className="flex items-center text-gray-700 hover:text-black">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="size-5 mb-4 mr-2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
           </svg>
           <h2 className="text-2xl font-bold mb-4">Dashboard</h2>
         </Link>
-        <Link to="/dashboard" className="flex mt-6 items-center text-gray-700 hover:text-black">
+        <Link to="/therapistdashboard" className="flex mt-6 items-center text-gray-700 hover:text-black">
           <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
           </svg>
@@ -100,4 +106,4 @@ const Dashboard = () => {
   );
 }
 
-export default Dashboard;
+export default AddPatient;
