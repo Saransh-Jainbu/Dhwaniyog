@@ -32,7 +32,7 @@ function StuLogin() {
                         
 
                         <div className="flex items-center mb-6 ">
-                            <button onClick={()=>navigate("/dashboard")} className="flex items-center gap-3 bg-[#ff685b] text-white text-lg font-medium py-3 px-6 rounded">
+                            <button onClick={()=>navigate("/therapistdashboard")} className="flex items-center gap-3 bg-[#ff685b] text-white text-lg font-medium py-3 px-6 rounded">
                                 Login
                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="10" viewBox="0 0 12 10" fill="none">
                                     <g clipPath="url(#clip0_2105_8409)">
