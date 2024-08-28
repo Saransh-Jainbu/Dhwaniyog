@@ -17,7 +17,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/AddPatient" element={<AddPatient/>} />
+        <Route path="/addpatient" element={<AddPatient/>} />
         <Route path="/studentlogin" element={<Login/>} />
         <Route path="/therapistlogin" element={<StuLogin/>} />
         <Route path="/forgotpassword" element={<Reset/>} />
