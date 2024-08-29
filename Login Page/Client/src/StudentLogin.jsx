@@ -62,7 +62,7 @@ function Login() {
                                     </defs>
                                 </svg>
                             </button>
-
+                        
                             <button onClick={() => navigate("/forgotpassword")} className='text-[#000000DE] text-xl font-bold font-roboto ml-20'>
                                 Forgot your password?
                             </button>
@@ -70,7 +70,7 @@ function Login() {
                         <button onClick ={()=>navigate("/therapistlogin")} className="w-[400px] flex justify-center items-center bg-black text-white text-sm font-medium uppercase tracking-[0.46px] py-3 rounded shadow-md font-roboto">
                             Switch to Supervisor Login
                         </button>
-                    
+
                         </form>
                     
                 </div>
