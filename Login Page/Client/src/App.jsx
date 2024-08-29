@@ -10,6 +10,8 @@ import ResetPassword from "./ResetPassword";
 import Recovery from "./Recovery";
 
 import TherapistDashboard from "./TherapistDashboard";
+import ActivityPlans from "./ActivityPlans";
+import Goals from "./Goals";
 
 
 function App() {
@@ -25,6 +27,9 @@ function App() {
         <Route path="/recovery" element={<Recovery/>} />
         <Route path="/studentdashboard" element={<AddPatient/>} />
         <Route path="/therapistdashboard" element={<TherapistDashboard/>} />
+        <Route path="/activityplans" element={<ActivityPlans/>} />
+        <Route path="/goals" element={<Goals/>} />
+
       </Routes>
     </Router>
   );
