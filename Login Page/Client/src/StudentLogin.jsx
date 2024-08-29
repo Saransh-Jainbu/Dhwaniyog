@@ -12,13 +12,16 @@ function Login() {
 
     const handleSubmit = async(e) =>{
         e.preventDefault();
+        if (!email || !password) {
+            console.log("Email or password cannot be empty.");
+            return;
+        }
         try {
             await signInWithEmailAndPassword(auth, email, password);
             console.log("User logged in successfully!");
-            window.location.href("/");
+            navigate("/therapistdashboard");
         } catch (error) {
-
-            
+            console.log("Error occured", error);   
         }
     }
 
@@ -33,7 +36,6 @@ function Login() {
                     <h2 className="text-[#ff685b] text-3xl font-montserrat self-start mb-8 font-extrabold">
                         Sign in
                     </h2>
-                        <form onSubmit={handleSubmit}>
                         <input
                             type="email"
                             className="rounded border w-[400px] p-4 mb-6 border-gray-300 pl-4"
@@ -51,7 +53,7 @@ function Login() {
                         
 
                         <div className="flex items-center mb-6 ">
-                            <button className="flex items-center gap-3 bg-[#ff685b] text-white text-lg font-medium py-3 px-6 rounded">
+                            <button onClick={handleSubmit} className="flex items-center gap-3 bg-[#ff685b] text-white text-lg font-medium py-3 px-6 rounded">
                                 Login
                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="10" viewBox="0 0 12 10" fill="none">
                                     <g clipPath="url(#clip0_2105_8409)">
@@ -70,8 +72,6 @@ function Login() {
                         <button onClick ={()=>navigate("/therapistlogin")} className="w-[400px] flex justify-center items-center bg-black text-white text-sm font-medium uppercase tracking-[0.46px] py-3 rounded shadow-md font-roboto">
                             Switch to Supervisor Login
                         </button>
-
-                        </form>
                     
                 </div>
             </div>

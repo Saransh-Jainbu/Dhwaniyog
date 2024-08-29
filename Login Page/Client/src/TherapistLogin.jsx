@@ -15,12 +15,10 @@ function StuLogin() {
             console.log("Email or password cannot be empty.");
             return;
         }
-        console.log("hiii");
         try {
             await signInWithEmailAndPassword(auth, String(email), String(password));
             console.log("User logged in successfully!");
-            window.location.href("/therapistdashboard");
-            //navigate("/therapistdashboard");
+            navigate("/therapistdashboard");
         } catch (error) {
             console.log("Error occured", error);
             
@@ -38,7 +36,6 @@ function StuLogin() {
                     <h2 className="text-[#ff685b] text-3xl font-montserrat self-start mb-8 font-extrabold">
                         Sign in
                     </h2>
-                    {/* <form onSubmit={handleSubmit}> */}
                         <input
                             type="email"
                             className="rounded border w-[400px] p-4 mb-6 border-gray-300 pl-4"
@@ -53,8 +50,6 @@ function StuLogin() {
                             required
                             onChange={(e) => setPassword(e.target.value)}
                         />
-                        
-                        {/* onClick={()=>navigate("/therapistdashboard")} */}
 
                         <div className="flex items-center mb-6 ">
                             <button onClick={handleSubmit} className="flex items-center gap-3 bg-[#ff685b] text-white text-lg font-medium py-3 px-6 rounded">
@@ -74,7 +69,6 @@ function StuLogin() {
                             </button>
                         </div>
 
-                        {/* </form> */}
                         <button onClick={() => navigate("/studentlogin")} className="w-[400px] flex justify-center items-center bg-black text-white text-sm font-medium uppercase tracking-[0.46px] py-3 rounded shadow-md font-roboto">
                             Switch to Student Login
                         </button>
