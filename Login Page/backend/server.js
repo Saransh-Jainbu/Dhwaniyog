@@ -34,7 +34,7 @@ const PatientSchema = new mongoose.Schema({
   image: String
 });
 
-const Patient = mongoose.model('Patient', PatientSchema);
+const Patient = mongoose.model('patients', PatientSchema);
 
 app.post('/addpatient', async (req, res) => {
   const patient = new Patient(req.body);
