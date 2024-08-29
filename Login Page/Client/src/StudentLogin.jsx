@@ -1,10 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import img from './assets/login.png';
 import { useNavigate } from 'react-router-dom';
+import {signInWithEmailAndPassword} from "firebase/auth";
+import {auth} from "./firebase/authentication"
 
 
 function Login() {
     const navigate = useNavigate();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const handleSubmit = async(e) =>{
+        e.preventDefault();
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+            console.log("User logged in successfully!");
+            window.location.href("/");
+        } catch (error) {
+
+            
+        }
+    }
+
     return (
         <>
         <div className="flex flex-row h-screen ml-[310px]">
@@ -16,18 +33,20 @@ function Login() {
                     <h2 className="text-[#ff685b] text-3xl font-montserrat self-start mb-8 font-extrabold">
                         Sign in
                     </h2>
-                    
+                        <form onSubmit={handleSubmit}>
                         <input
                             type="email"
                             className="rounded border w-[400px] p-4 mb-6 border-gray-300 pl-4"
                             placeholder="Email Address *"
                             required
+                            onChange={(e) => setEmail(e.target.value)}
                         />
                         <input
                             type="password"
                             className="rounded border w-[400px] p-4 mb-6 border-gray-300 pl-4"
                             placeholder="Password *"
                             required
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                         
 
@@ -51,6 +70,8 @@ function Login() {
                         <button onClick ={()=>navigate("/therapistlogin")} className="w-[400px] flex justify-center items-center bg-black text-white text-sm font-medium uppercase tracking-[0.46px] py-3 rounded shadow-md font-roboto">
                             Switch to Supervisor Login
                         </button>
+                    
+                        </form>
                     
                 </div>
             </div>
