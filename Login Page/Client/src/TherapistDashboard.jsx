@@ -42,7 +42,7 @@ function StudentDashboard() {
     <div className="flex h-screen bg-gray-100">
       <div className="w-64 bg-black text-white p-6 flex flex-col justify-between">
         <div>
-          <h1 className="text-xl font-bold mb-8">DHWANIयोग</h1>
+          <button onClick={()=> navigate("/")} className="text-xl font-bold mb-8">DHWANIयोग</button>
           <nav className="space-y-4">
             <a href="#" className="block text-gray-300 hover:text-white">
               Patients
