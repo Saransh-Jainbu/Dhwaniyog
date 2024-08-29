@@ -1,10 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import img from './assets/login.png';
 import { useNavigate } from 'react-router-dom';
-
+import {signInWithEmailAndPassword} from "firebase/auth";
+import {auth} from "./firebase/authentication"
 
 function StuLogin() {
     const navigate = useNavigate();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const handleSubmit = async(e) =>{
+        e.preventDefault();
+        if (!email || !password) {
+            console.log("Email or password cannot be empty.");
+            return;
+        }
+        console.log("hiii");
+        try {
+            await signInWithEmailAndPassword(auth, String(email), String(password));
+            console.log("User logged in successfully!");
+            window.location.href("/therapistdashboard");
+            //navigate("/therapistdashboard");
+        } catch (error) {
+            console.log("Error occured", error);
+            
+        }
+    }
+
     return (
         <>
         <div className="flex flex-row h-screen ml-[310px]">
@@ -16,23 +38,26 @@ function StuLogin() {
                     <h2 className="text-[#ff685b] text-3xl font-montserrat self-start mb-8 font-extrabold">
                         Sign in
                     </h2>
-                    
+                    {/* <form onSubmit={handleSubmit}> */}
                         <input
                             type="email"
                             className="rounded border w-[400px] p-4 mb-6 border-gray-300 pl-4"
                             placeholder="Email Address *"
                             required
+                            onChange={(e) => setEmail(e.target.value)}
                         />
                         <input
                             type="password"
                             className="rounded border w-[400px] p-4 mb-6 border-gray-300 pl-4"
                             placeholder="Password *"
                             required
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                         
+                        {/* onClick={()=>navigate("/therapistdashboard")} */}
 
                         <div className="flex items-center mb-6 ">
-                            <button onClick={()=>navigate("/therapistdashboard")} className="flex items-center gap-3 bg-[#ff685b] text-white text-lg font-medium py-3 px-6 rounded">
+                            <button onClick={handleSubmit} className="flex items-center gap-3 bg-[#ff685b] text-white text-lg font-medium py-3 px-6 rounded">
                                 Login
                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="10" viewBox="0 0 12 10" fill="none">
                                     <g clipPath="url(#clip0_2105_8409)">
@@ -43,11 +68,13 @@ function StuLogin() {
                                     </defs>
                                 </svg>
                             </button>
-
+                        
                             <button onClick={() => navigate("/forgotpassword")} className='text-[#000000DE] text-xl font-bold font-roboto ml-20'>
                                 Forgot your password?
                             </button>
                         </div>
+
+                        {/* </form> */}
                         <button onClick={() => navigate("/studentlogin")} className="w-[400px] flex justify-center items-center bg-black text-white text-sm font-medium uppercase tracking-[0.46px] py-3 rounded shadow-md font-roboto">
                             Switch to Student Login
                         </button>
