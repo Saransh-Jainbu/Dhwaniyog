@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Leftbar = () => {
   return (
     <>
-    <div className=" bg-gray-100 p-4 w-fit">
+      <div className="bg-gray-100 h-[100vh] fixed top-0 left-0 p-4 w-fit">
         <Link
           to="/therapistdashboard"
           className="flex items-center text-gray-700 hover:text-black"
@@ -48,7 +48,6 @@ const Leftbar = () => {
           Add Patient
         </Link>
 
-
         {/* Component 2 */}
         <Link
           to="/activityplans"
@@ -72,7 +71,6 @@ const Leftbar = () => {
         </Link>
 
         {/* Component 3 */}
-
         <Link
           to="/goals"
           className="flex mt-6 items-center text-gray-700 hover:text-black"
@@ -94,7 +92,6 @@ const Leftbar = () => {
           Goals
         </Link>
       </div>
-    
     </>
   )
 }
