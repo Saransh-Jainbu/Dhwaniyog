@@ -6,7 +6,7 @@ const Goals = () => {
     <>
       <div className="flex">
         <Leftbar />
-        <div className="flex flex-col p-2 ml-20 mt-12 w-[850px] ">
+        <div className="flex flex-col p-2 ml-[380px] mt-12 w-[850px] ">
           <span className="font-roboto font-bold text-3xl">Goals Plan</span>
 
           <div className="flex flex-col ml-4 mt-20">
@@ -14,8 +14,8 @@ const Goals = () => {
             <div className=" font-bold text-xl">
               <div className="flex justify-between">
                 Progress
-                <button className="font-montserrat p-2 w-[180px] font-semibold text-lg bg-red-500 w-auto rounded-3xl text-white ">
-                  View Application
+                <button className="font-montserrat p-2 font-semibold text-lg bg-red-500 w-auto rounded-3xl text-white ">
+                  View Attachments
                 </button>
               </div>
               <div className="mb-4 font-normal ml-4 text-[16px] text-slate-600 font-roboto ">
@@ -35,17 +35,16 @@ const Goals = () => {
             <span className="font-roboto font-bold text-xl ">Feedback:</span>
           </div>
 
-          <div className="border-2 p-4 mt-4 w-[70vh] h-[20vh] mb-8">
-            Try to twist tongue
-          </div>
+          <input type="text" placeholder="Type your suggestions here" className="border-2 p-4 mt-4 w-[70vh] h-[10vh] mb-8"></input>
+            
 
           <select className="border p-3 rounded w-[200px] pr-8">
                 <option value="" disabled selected hidden>
                   Evaluate
                 </option>
-                {[...Array(11)].map((_, i) => (
+                {[...Array(10)].map((_, i) => (
                   <option key={i} value={i + 1}>
-                    {i * 10}
+                    {i + 1}
                   </option>
                 ))}
               </select>
