@@ -19,7 +19,7 @@ function Login() {
         try {
             await signInWithEmailAndPassword(auth, email, password);
             console.log("User logged in successfully!");
-            navigate("/therapistdashboard");
+            navigate("/studentdashboard");
         } catch (error) {
             console.log("Error occured", error);   
         }
