@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from "react-router-dom";
 
-const Leftbar = () => {
+const StuLeftbar = () => {
   return (
     <>
       <div className="bg-gray-100 h-[100vh] fixed top-0 left-0 p-4 w-fit">
@@ -26,7 +26,7 @@ const Leftbar = () => {
           <h2 className="text-2xl font-bold mb-4 mr-16">Dashboard</h2>
         </Link>
 
-        {/* Component 1 */}
+        {/* Component 1
         <Link
           to="/addpatient"
           className="flex mt-6 items-center text-gray-700 hover:text-black"
@@ -46,11 +46,11 @@ const Leftbar = () => {
             />
           </svg>
           Add Patient
-        </Link>
+        </Link> */}
 
         {/* Component 2 */}
         <Link
-          to="/activityplans"
+          to="/studentactivityplans"
           className="flex mt-6 items-center text-gray-700 hover:text-black"
         >
           <svg
@@ -72,7 +72,7 @@ const Leftbar = () => {
 
         {/* Component 3 */}
         <Link
-          to="/goals"
+          to="/studentgoals"
           className="flex mt-6 items-center text-gray-700 hover:text-black"
         >
           <svg
@@ -96,4 +96,4 @@ const Leftbar = () => {
   )
 }
 
-export default Leftbar
+export default StuLeftbar

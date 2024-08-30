@@ -12,6 +12,9 @@ import Recovery from "./Recovery";
 import TherapistDashboard from "./TherapistDashboard";
 import ActivityPlans from "./ActivityPlans";
 import Goals from "./Goals";
+import StudentDashboard from "./StudentDashboard";
+import StudentGoals from "./StudentGoals";
+import StudentActivityPlans from "./StudentActivityPlans";
 
 
 function App() {
@@ -25,10 +28,12 @@ function App() {
         <Route path="/forgotpassword" element={<Reset/>} />
         <Route path="/resetpassword" element={<ResetPassword/>} />
         <Route path="/recovery" element={<Recovery/>} />
-        <Route path="/studentdashboard" element={<AddPatient/>} />
+        <Route path="/studentdashboard" element={<StudentDashboard/>} /> 
         <Route path="/therapistdashboard" element={<TherapistDashboard/>} />
         <Route path="/activityplans" element={<ActivityPlans/>} />
         <Route path="/goals" element={<Goals/>} />
+        <Route path="/studentgoals" element={<StudentGoals/>} />
+        <Route path="/studentactivityplans" element={<StudentActivityPlans/>} />
 
       </Routes>
     </Router>

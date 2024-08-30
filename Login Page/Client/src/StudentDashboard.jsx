@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
 
-function TherapistDashboard() {
+function StudentDashboard() {
   const navigate = useNavigate();
   const patients = [
     {
@@ -163,4 +163,4 @@ function TherapistDashboard() {
   );
 }
 
-export default TherapistDashboard;
+export default StudentDashboard;
