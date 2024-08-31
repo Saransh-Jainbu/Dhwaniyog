@@ -8,7 +8,6 @@ import StuLogin from "./TherapistLogin";
 import Reset from "./Reset";
 import ResetPassword from "./ResetPassword";
 import Recovery from "./Recovery";
-
 import TherapistDashboard from "./TherapistDashboard";
 import ActivityPlans from "./ActivityPlans";
 import Goals from "./Goals";
@@ -16,6 +15,8 @@ import StudentDashboard from "./StudentDashboard";
 import StudentGoals from "./StudentGoals";
 import StudentActivityPlans from "./StudentActivityPlans";
 import ViewPatient from "./ViewPatient";
+import Logout from "./Logout";
+import Contact from "./Contact";
 
 
 function App() {
@@ -36,6 +37,8 @@ function App() {
         <Route path="/studentgoals" element={<StudentGoals/>} />
         <Route path="/studentactivityplans" element={<StudentActivityPlans/>} />
         <Route path="/viewpatient" element={<ViewPatient/>} />
+        <Route path="/logout" element={<Logout/>} />
+        <Route path="/contact" element={<Contact/>} />
 
       </Routes>
     </Router>
