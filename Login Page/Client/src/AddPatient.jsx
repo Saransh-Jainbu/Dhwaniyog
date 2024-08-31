@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-
 import dashboard_1 from "./assets/dashboard_1.jpeg";
 import axios from "axios";
 import Leftbar from "./Leftbar";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer,toast } from "react-toastify";
 
 const AddPatient = () => {
   const [formData, setFormData] = useState({
@@ -83,10 +81,31 @@ const AddPatient = () => {
         "http://localhost:5000/addpatient",
         data
       );
-      toast.success("User added successfully!");
+      toast.success("Patient added successfully!");
       console.log(response.data);
+
+      // Clear the form data after successful submission
+      setFormData({
+        firstName: "",
+        lastName: "",
+        gender: "",
+        age: "",
+        email: "",
+        address: "",
+        contactNumber: "",
+        appointTo: "",
+        appointBy: "",
+        category: "",
+        problem: "",
+        sessions: 0,
+        image: [],
+        additionalImage: [],
+      });
+
+      setImagePreview([]);
+      setAdditionalImagePreview(null);
     } catch (error) {
-      toast.error("Error adding Patient.");
+      toast.error("Error adding patient!");
       console.error("Error adding patient:", error);
     }
   };
@@ -111,16 +130,13 @@ const AddPatient = () => {
   };
 
   return (
-    
     <div className="flex">
       <Leftbar />
-      <ToastContainer/>
+      <ToastContainer />
       <div className="flex-1 p-8">
         <div className="max-w-2xl mx-auto">
           <div className="flex justify-between items-center mb-6">
             <button className="text-2xl font-bold">Add Patient</button>
-
-          
             <div className="flex ml-auto items-center space-x-4">
               <label
                 htmlFor="additionalImage"
@@ -128,7 +144,6 @@ const AddPatient = () => {
               >
                 Upload Image
               </label>
-            
               <input
                 type="file"
                 name="additionalImage"
@@ -326,3 +341,22 @@ const AddPatient = () => {
 };
 
 export default AddPatient;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
