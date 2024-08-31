@@ -36,7 +36,7 @@ function Login() {
                 </button>
                 <div className="flex flex-col items-center">
                     <h2 className="text-[#ff685b] text-3xl font-montserrat self-start mb-8 font-extrabold">
-                        Sign in <span className='text-lg text-gray-700 ml-2'>(Therpaist)</span> 
+                        Sign in <span className='text-lg text-gray-700 ml-2'>(Therapist)</span> 
                     </h2>
                         <input
                             type="email"
@@ -91,3 +91,5 @@ function Login() {
 }
 
 export default Login;
+
+
