@@ -40,9 +40,23 @@ const PatientSchema = new mongoose.Schema({
   additionalImage: String,  // Store additional image as a string (path)
 });
 
+const StudentSchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  supervisior: String,
+  problem: String,    
+  sessions: Number,   
+  status: String,     
+  assignedTo: String, 
+  image: [String],    
+});
+
+
+const Student = mongoose.model("students", StudentSchema);
+
 const Patient = mongoose.model('patients', PatientSchema);
 
-// Configure multer for file uploads
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'uploads/');
@@ -90,6 +104,15 @@ app.get('/patients', async (req, res) => {
     res.json(patients);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching patients' });
+  }
+});
+
+app.get('/students', async (req, res) => {
+  try {
+    const students = await Student.find();
+    res.json(students);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching students' });
   }
 });
 
