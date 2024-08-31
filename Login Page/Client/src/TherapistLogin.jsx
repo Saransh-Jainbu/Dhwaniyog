@@ -16,7 +16,7 @@ function StuLogin() {
             return;
         }
         try {
-            await signInWithEmailAndPassword(auth, String(email), String(password));
+            await signInWithEmailAndPassword(auth, email, password);
             console.log("User logged in successfully!");
             navigate("/therapistdashboard");
         } catch (error) {
@@ -29,7 +29,7 @@ function StuLogin() {
         <>
         <div className="flex flex-row h-screen ml-[310px]">
             <div className="flex-1 h-full bg-white flex flex-col items-center justify-center">
-                <div className="absolute left-24 top-8 text-[#252b42] font-bold text-2xl leading-8 tracking-[0.1px] font-montserrat">
+                <div onClick={()=> navigate("/")} className="absolute left-24 top-8 text-[#252b42] font-bold text-2xl leading-8 tracking-[0.1px] font-montserrat">
                 DHWANIयोग
                 </div>
                 <div className="flex flex-col items-center">

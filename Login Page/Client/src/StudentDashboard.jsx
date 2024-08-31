@@ -145,7 +145,7 @@ function StudentDashboard() {
               <div className="mt-4 text-center">
                 <p>Sessions: {patient.sessions}</p>
                 <p>Case Status: {patient.status}</p>
-                <p>Allotted To: {patient.assignedTo}</p>
+                <p>Allotted By: {patient.assignedTo}</p>
               </div>
               <div className="mt-4 flex justify-between">
                 <button className="bg-gray-200 text-black px-4 py-2 rounded-3xl">
