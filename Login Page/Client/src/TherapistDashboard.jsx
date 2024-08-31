@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
+import VerticalLine from "./VerticalLine";
 
 function TherapistDashboard() {
   const navigate = useNavigate();
@@ -142,9 +143,9 @@ function TherapistDashboard() {
                 {patient.name}
               </h3>
               <p className="text-center text-gray-500">{patient.problem}</p>
-              <div className="mt-4 text-center">
-                <p>Sessions: {patient.sessions}</p>
-                <p>Case Status: {patient.status}</p>
+              <div className="flex flex-row mt-4 text-center gap-2">
+                <p>Sessions: {patient.sessions}</p><VerticalLine />
+                <p>Case Status: {patient.status}</p><VerticalLine />
                 <p>Allotted To: {patient.assignedTo}</p>
               </div>
               <div className="mt-4 flex justify-between">

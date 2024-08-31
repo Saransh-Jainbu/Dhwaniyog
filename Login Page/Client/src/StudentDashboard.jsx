@@ -57,12 +57,12 @@ function StudentDashboard() {
           </nav>
         </div>
         <div>
-          <a href="#" className="block text-gray-300 hover:text-white mb-4">
-            Settings
-          </a>
-          <a href="#" className="block text-gray-300 hover:text-white">
-            Help Center
-          </a>
+          <button onClick={()=> navigate("/")} className="block text-gray-300 hover:text-white mb-4">
+            Logout
+          </button>
+          <button onClick={()=>navigate("")} className="block text-gray-300 hover:text-white">
+            Contact us
+          </button>
         </div>
       </div>
 
