@@ -84,6 +84,15 @@ app.post('/addpatient', upload.fields([{ name: 'image' }, { name: 'additionalIma
   }
 });
 
+app.get('/patients', async (req, res) => {
+  try {
+    const patients = await Patient.find();
+    res.json(patients);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching patients' });
+  }
+});
+
 // Serve static files from the uploads directory
 app.use('/uploads', express.static('uploads'));
 
