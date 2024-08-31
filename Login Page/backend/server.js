@@ -35,7 +35,8 @@ const PatientSchema = new mongoose.Schema({
   appointBy: String,  
   category: String,
   problem: String,
-  sessions: Number,
+  sessions: {Number, default:0},
+  status: String,
   image: [String],  // Store multiple images as an array of strings (paths)
   additionalImage: String,  // Store additional image as a string (path)
 });
@@ -56,7 +57,22 @@ const Student = mongoose.model("students", StudentSchema);
 
 const Patient = mongoose.model('patients', PatientSchema);
 
+const TherapistSchema = new mongoose.Schema({
+  Name: String,
+  email: String,
+  super1visor: String,
+  totalSessions: Number
+});
 
+const Therapist = mongoose.model("therapist", TherapistSchema);
+
+const CategorySchema = new mongoose.Schema({
+  Name: String
+});
+
+const Category = mongoose.model('category', CategorySchema);
+
+// Configure multer for file uploads
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'uploads/');
@@ -107,12 +123,22 @@ app.get('/patients', async (req, res) => {
   }
 });
 
-app.get('/students', async (req, res) => {
+
+app.get('/therapist', async (req, res) => {
   try {
-    const students = await Student.find();
-    res.json(students);
+    const therapist = await Therapist.find();
+    res.json(therapist);
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching students' });
+    res.status(500).json({ message: 'Error fetching therapists' });
+  }
+});
+
+app.get('/category', async (req, res) => {
+  try {
+    const category = await Category.find();
+    res.json(category);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching category' });
   }
 });
 

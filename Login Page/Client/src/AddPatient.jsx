@@ -1,10 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import dashboard_1 from "./assets/dashboard_1.jpeg";
 import axios from "axios";
 import Leftbar from "./Leftbar";
-import { ToastContainer,toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 
 const AddPatient = () => {
+  const [therapistOptions, setTherapistOptions] = useState([]);
+  const [categoryOptions, setcategoryOptions] = useState([]);
+
+  useEffect(() => {
+    const fetchTherapists = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/therapist");
+        setTherapistOptions(response.data);
+      } catch (error) {
+        console.error("Error fetching therapists", error);
+      }
+    };
+
+    fetchTherapists();
+  }, []);
+
+  useEffect(() => {
+    const fetchCategory = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/category");
+        setcategoryOptions(response.data);
+      } catch (error) {
+        console.error("Error fetching category", error);
+      }
+    };
+
+    fetchCategory();
+  }, []);
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -18,6 +47,7 @@ const AddPatient = () => {
     category: "",
     problem: "",
     sessions: 0,
+    status: "",
     image: [],
     additionalImage: [],
   });
@@ -47,7 +77,10 @@ const AddPatient = () => {
     } else if (e.target.name === "additionalImage") {
       const file = e.target.files[0];
       if (file.type.startsWith("image/")) {
-        setAdditionalImagePreview({ type: "image", url: URL.createObjectURL(file) });
+        setAdditionalImagePreview({
+          type: "image",
+          url: URL.createObjectURL(file),
+        });
       } else if (file.type === "application/pdf") {
         setAdditionalImagePreview({ type: "pdf", name: file.name });
       } else {
@@ -98,6 +131,7 @@ const AddPatient = () => {
         category: "",
         problem: "",
         sessions: 0,
+        status: "",
         image: [],
         additionalImage: [],
       });
@@ -162,12 +196,16 @@ const AddPatient = () => {
                   ) : additionalImagePreview.type === "pdf" ? (
                     <div className="flex items-center justify-center h-full">
                       <span className="text-red-500">PDF File</span>
-                      <span className="text-xs">{additionalImagePreview.name}</span>
+                      <span className="text-xs">
+                        {additionalImagePreview.name}
+                      </span>
                     </div>
                   ) : (
                     <div className="flex items-center justify-center h-full">
                       <span className="text-gray-500">File</span>
-                      <span className="text-xs">{additionalImagePreview.name}</span>
+                      <span className="text-xs">
+                        {additionalImagePreview.name}
+                      </span>
                     </div>
                   )}
                   <button
@@ -267,7 +305,13 @@ const AddPatient = () => {
                 onChange={handleChange}
               >
                 <option value="">Appoint To</option>
+                {therapistOptions.map((therapist) => (
+                  <option key={therapist._id} value={therapist.Name}>
+                    {therapist.Name}
+                  </option>
+                ))}
               </select>
+
               <select
                 name="category"
                 className="border p-2 rounded"
@@ -275,6 +319,11 @@ const AddPatient = () => {
                 onChange={handleChange}
               >
                 <option value="">Category</option>
+                {categoryOptions.map((category) => (
+                  <option key={category._id} value={category.Name}>
+                    {category.Name}
+                  </option>
+                ))}
               </select>
             </div>
             <textarea
@@ -307,7 +356,9 @@ const AddPatient = () => {
                       />
                     ) : file.type === "pdf" ? (
                       <div className="flex items-center justify-center h-full">
-                        <span className="text-xs font-montserrat font-bold">{file.name}</span>
+                        <span className="text-xs font-montserrat font-bold">
+                          {file.name}
+                        </span>
                       </div>
                     ) : (
                       <div className="flex items-center justify-center h-full">
