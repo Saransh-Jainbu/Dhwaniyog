@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import dashboard_1 from "./assets/dashboard_1.jpeg";
 import axios from "axios";
 import Leftbar from "./Leftbar";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddPatient = () => {
   const [formData, setFormData] = useState({
@@ -81,8 +83,10 @@ const AddPatient = () => {
         "http://localhost:5000/addpatient",
         data
       );
+      toast.success("User added successfully!");
       console.log(response.data);
     } catch (error) {
+      toast.error("Error adding Patient.");
       console.error("Error adding patient:", error);
     }
   };
@@ -107,8 +111,10 @@ const AddPatient = () => {
   };
 
   return (
+    
     <div className="flex">
       <Leftbar />
+      <ToastContainer/>
       <div className="flex-1 p-8">
         <div className="max-w-2xl mx-auto">
           <div className="flex justify-between items-center mb-6">
