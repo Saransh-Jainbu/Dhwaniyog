@@ -1,49 +1,33 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
 import VerticalLine from "./VerticalLine";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 function TherapistDashboard() {
   const navigate = useNavigate();
-  const patients = [
-    {
-      name: "Robert Whitstable",
-      problem: "Low Voice Problem",
-      sessions: 2,
-      status: "Pending",
-      assignedTo: "Aditya G.",
-      image: "https://via.placeholder.com/150",
-    },
-    {
-      name: "Robert Whitstable",
-      problem: "Stuttering Problem",
-      sessions: 7,
-      status: "Completed",
-      assignedTo: "Dhiraj +1",
-      image: "https://via.placeholder.com/150",
-    },
-    {
-      name: "Robert Whitstable",
-      problem: "Low Voice Problem",
-      sessions: 2,
-      status: "In-Progress",
-      assignedTo: "Aditya G.",
-      image: "https://via.placeholder.com/150",
-    },
-    {
-      name: "Robert Whitstable",
-      problem: "Low Voice Problem",
-      sessions: 2,
-      status: "In-Progress",
-      assignedTo: "Aditya G.",
-      image: "https://via.placeholder.com/150",
-    },
-  ];
+  const [patients, setPatients] = useState([]);
+
+  useEffect(() => {
+    const fetchPatients = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/patients');
+        setPatients(response.data);
+      } catch (error) {
+        console.error("Error fetching patients:", error);
+      }
+    };
+
+    fetchPatients();
+  }, []);
 
   return (
     <div className="flex h-screen bg-gray-100">
       <div className="w-64 bg-black text-white p-6 flex flex-col justify-between">
         <div>
-          <button onClick={()=> navigate("/")} className="text-xl font-bold mb-8">DHWANIयोग</button>
+          <button onClick={() => navigate("/")} className="text-xl font-bold mb-8">
+            DHWANIयोग
+          </button>
           <nav className="space-y-4">
             <a href="#" className="block text-gray-300 hover:text-white">
               Patients
@@ -70,7 +54,7 @@ function TherapistDashboard() {
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Patients</h2>
           <div className="flex items-center space-x-4">
-            <button onClick={()=>navigate("/AddPatient")} className="bg-red-500 text-white px-4 py-2 rounded">
+            <button onClick={() => navigate("/AddPatient")} className="bg-red-500 text-white px-4 py-2 rounded">
               New Patient
             </button>
             <button className="bg-white text-black px-4 py-2 rounded">
@@ -134,18 +118,27 @@ function TherapistDashboard() {
         <div className="grid grid-cols-4 gap-6">
           {patients.map((patient, index) => (
             <div key={index} className="bg-white p-4 rounded-2xl shadow">
-              <img
-                className="w-16 h-16 rounded-full mx-auto"
-                src={patient.image}
-                alt={patient.name}
-              />
+              <div className="flex justify-center">
+                {patient.image && patient.image.length > 0 ? (
+                  <img
+                    className="w-16 h-16 rounded-full"
+                    src={patient.image[0]}  // Assuming patient.image is an array and you want the first image
+                    alt={patient.name}
+                  />
+                ) : (
+                  <div className="w-16 h-16 rounded-full bg-gray-300 flex items-center justify-center">
+                  </div>
+                )}
+              </div>
               <h3 className="text-center mt-4 text-lg font-semibold">
-                {patient.name}
+                {patient.firstName} {patient.lastName}
               </h3>
               <p className="text-center text-gray-500">{patient.problem}</p>
               <div className="flex flex-row mt-4 text-center gap-2">
-                <p>Sessions: {patient.sessions}</p><VerticalLine />
-                <p>Case Status: {patient.status}</p><VerticalLine />
+                <p>Sessions: {patient.sessions}</p>
+                <VerticalLine />
+                <p>Case Status: {patient.status}</p>
+                <VerticalLine />
                 <p>Allotted To: {patient.assignedTo}</p>
               </div>
               <div className="mt-4 flex justify-between">
