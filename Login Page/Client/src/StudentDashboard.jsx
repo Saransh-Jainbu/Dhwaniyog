@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
+import VerticalLine from "./VerticalLine";
 
 function StudentDashboard() {
   const navigate = useNavigate();
@@ -69,9 +70,6 @@ function StudentDashboard() {
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Patients</h2>
           <div className="flex items-center space-x-4">
-            <button onClick={()=>navigate("/AddPatient")} className="bg-red-500 text-white px-4 py-2 rounded">
-              New Patient
-            </button>
             <button className="bg-white text-black px-4 py-2 rounded">
               Sort by date
             </button>
@@ -142,17 +140,17 @@ function StudentDashboard() {
                 {patient.name}
               </h3>
               <p className="text-center text-gray-500">{patient.problem}</p>
-              <div className="mt-4 text-center">
-                <p>Sessions: {patient.sessions}</p>
-                <p>Case Status: {patient.status}</p>
-                <p>Allotted To: {patient.assignedTo}</p>
+              <div className="flex flex-row mt-4 gap-2 text-center">
+                <p>Sessions {patient.sessions}</p><VerticalLine />
+                <p>Case Status {patient.status}</p><VerticalLine />
+                <p>Allotted By {patient.assignedTo}</p>
               </div>
               <div className="mt-4 flex justify-between">
-                <button className="bg-gray-200 text-black px-4 py-2 rounded-3xl">
+                <button onClick={()=> navigate("/viewpatient")} className="bg-gray-200 text-black px-4 py-2 rounded-3xl">
                   View Case
                 </button>
                 <button className="bg-red-500 text-white px-4 py-2 rounded-3xl">
-                  Edit Case
+                  Edit Status
                 </button>
               </div>
             </div>

@@ -6,7 +6,7 @@ const StuLeftbar = () => {
     <>
       <div className="bg-gray-100 h-[100vh] fixed top-0 left-0 p-4 w-fit">
         <Link
-          to="/therapistdashboard"
+          to="/studentdashboard"
           className="flex items-center text-gray-700 hover:text-black"
         >
           <svg
@@ -26,9 +26,9 @@ const StuLeftbar = () => {
           <h2 className="text-2xl font-bold mb-4 mr-16">Dashboard</h2>
         </Link>
 
-        {/* Component 1
+        
         <Link
-          to="/addpatient"
+          to="/viewpatient"
           className="flex mt-6 items-center text-gray-700 hover:text-black"
         >
           <svg
@@ -45,8 +45,8 @@ const StuLeftbar = () => {
               d="M12 4v16m8-8H4"
             />
           </svg>
-          Add Patient
-        </Link> */}
+          View Patient
+        </Link> 
 
         {/* Component 2 */}
         <Link

@@ -7,7 +7,7 @@ const StudentGoals = () => {
         <div className="flex">
         <StuLeftbar/>
         <div className="flex flex-col p-2 mt-12 w-[850px] ml-[380px] ">
-          <span className="font-roboto font-bold text-3xl">Activity Plans</span>
+          <span className="font-roboto font-bold text-3xl"> Goals </span>
 
           <div className="flex flex-col ml-4 mt-16">
             

@@ -15,6 +15,7 @@ import Goals from "./Goals";
 import StudentDashboard from "./StudentDashboard";
 import StudentGoals from "./StudentGoals";
 import StudentActivityPlans from "./StudentActivityPlans";
+import ViewPatient from "./ViewPatient";
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
         <Route path="/goals" element={<Goals/>} />
         <Route path="/studentgoals" element={<StudentGoals/>} />
         <Route path="/studentactivityplans" element={<StudentActivityPlans/>} />
+        <Route path="/viewpatient" element={<ViewPatient/>} />
 
       </Routes>
     </Router>
