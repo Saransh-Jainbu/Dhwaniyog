@@ -1,52 +1,45 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import VerticalLine from "./VerticalLine";
+import axios from 'axios';
 
 function StudentDashboard() {
   const navigate = useNavigate();
-  const patients = [
-    {
-      name: "Robert Whitstable",
-      problem: "Low Voice Problem",
-      sessions: 2,
-      status: "Pending",
-      assignedTo: "Aditya G.",
-      image: "https://via.placeholder.com/150",
-    },
-    {
-      name: "Robert Whitstable",
-      problem: "Stuttering Problem",
-      sessions: 7,
-      status: "Completed",
-      assignedTo: "Dhiraj +1",
-      image: "https://via.placeholder.com/150",
-    },
-    {
-      name: "Robert Whitstable",
-      problem: "Low Voice Problem",
-      sessions: 2,
-      status: "In-Progress",
-      assignedTo: "Aditya G.",
-      image: "https://via.placeholder.com/150",
-    },
-    {
-      name: "Robert Whitstable",
-      problem: "Low Voice Problem",
-      sessions: 2,
-      status: "In-Progress",
-      assignedTo: "Aditya G.",
-      image: "https://via.placeholder.com/150",
-    },
-  ];
+  const [students, setStudents] = useState([]);
+
+  useEffect(() => {
+    const fetchStudents = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/students');
+        console.log(response.data);
+        setStudents(response.data);
+      } catch (error) {
+        console.error("Error fetching students:", error);
+      }
+    };
+  
+    fetchStudents();
+  }, []);
+
+  const viewPatientDetails = (studentId) => {
+    // Log to check if studentId is being passed correctly
+    console.log('Storing student ID:', studentId);
+  
+    // Store the student ID in sessionStorage
+    sessionStorage.setItem('currentStudentId', studentId);
+    
+    // Navigate to the ViewPatient page
+    navigate(`/viewpatient/${studentId}`);
+  };
 
   return (
     <div className="flex h-screen bg-gray-100">
       <div className="w-64 bg-black text-white p-6 flex flex-col justify-between">
         <div>
-          <button onClick={()=> navigate("/")} className="text-xl font-bold mb-8">DHWANIयोग</button>
+          <button onClick={() => navigate("/")} className="text-xl font-bold mb-8">DHWANIयोग</button>
           <nav className="space-y-4">
             <a href="#" className="block text-gray-300 hover:text-white">
-              Patients
+              Students
             </a>
             <a href="#" className="block text-gray-300 hover:text-white">
               Pending Cases
@@ -57,10 +50,10 @@ function StudentDashboard() {
           </nav>
         </div>
         <div>
-          <button onClick={()=> navigate("/")} className="block text-gray-300 hover:text-white mb-4">
+          <button onClick={() => navigate("/")} className="block text-gray-300 hover:text-white mb-4">
             Logout
           </button>
-          <button onClick={()=>navigate("")} className="block text-gray-300 hover:text-white">
+          <button onClick={() => navigate("/contact")} className="block text-gray-300 hover:text-white">
             Contact us
           </button>
         </div>
@@ -68,7 +61,7 @@ function StudentDashboard() {
 
       <div className="flex-grow p-6 overflow-auto">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold">Patients</h2>
+          <h2 className="text-2xl font-bold">Students</h2>
           <div className="flex items-center space-x-4">
             <button className="bg-white text-black px-4 py-2 rounded">
               Sort by date
@@ -129,33 +122,44 @@ function StudentDashboard() {
         </div>
 
         <div className="grid grid-cols-4 gap-6">
-          {patients.map((patient, index) => (
+          {students.map((student, index) => (
             <div key={index} className="bg-white p-4 rounded-2xl shadow">
-              <img
-                className="w-16 h-16 rounded-full mx-auto"
-                src={patient.image}
-                alt={patient.name}
-              />
+              <div className="flex justify-center">
+                {student.image && student.image.length > 0 ? (
+                  <img
+                    className="w-16 h-16 rounded-full"
+                    src={`http://localhost:5000${student.image[0]}`}  
+                    alt={student.name}
+                  />
+                ) : (
+                  <div className="w-16 h-16 rounded-full bg-gray-300 flex items-center justify-center">
+                    {/* Placeholder for when no image is available */}
+                  </div>
+                )}
+              </div>
               <h3 className="text-center mt-4 text-lg font-semibold">
-                {patient.name}
+                {student.name}
               </h3>
-              <p className="text-center text-gray-500">{patient.problem}</p>
-              <div className="flex flex-row mt-4 gap-2 text-center">
-                <p>Sessions {patient.sessions}</p><VerticalLine />
-                <p>Case Status {patient.status}</p><VerticalLine />
-                <p>Allotted By {patient.assignedTo}</p>
+              <p className="text-center text-gray-500">{student.email}</p>
+              <div className="flex flex-row mt-4 text-center gap-2">
+                <p>Supervisor: {student.supervisior}</p>
+                <VerticalLine />
+                <p>Status: {student.status}</p>
+                <VerticalLine />
+                <p>Sessions: {student.sessions}</p>
               </div>
               <div className="mt-4 flex justify-between">
-                <button onClick={()=> navigate("/viewpatient")} className="bg-gray-200 text-black px-4 py-2 rounded-3xl">
-                  View Case
+                <button onClick={() => viewPatientDetails(student._id)} className="bg-gray-200 text-black px-4 py-2 rounded-3xl">
+                  View Details
                 </button>
                 <button className="bg-red-500 text-white px-4 py-2 rounded-3xl">
-                  Edit Status
+                  Edit
                 </button>
               </div>
             </div>
           ))}
         </div>
+
       </div>
     </div>
   );
