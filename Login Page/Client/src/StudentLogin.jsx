@@ -3,7 +3,8 @@ import img from './assets/login.png';
 import { useNavigate } from 'react-router-dom';
 import {signInWithEmailAndPassword} from "firebase/auth";
 import {auth} from "./firebase/authentication"
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
     const navigate = useNavigate();
@@ -21,12 +22,13 @@ function Login() {
             console.log("User logged in successfully!");
             navigate("/studentdashboard");
         } catch (error) {
-            console.log("Error occured", error);   
+            toast.error("Invalid Credentials!", {autoClose: 2000});  
         }
     }
 
     return (
         <>
+        <ToastContainer/>
         <div className="flex flex-row h-screen ml-[310px]">
             <div className="flex-1 h-full bg-white flex flex-col items-center justify-center">
                 <button onClick={()=> navigate("/")} className="absolute left-24 top-8 text-[#252b42] font-bold text-2xl leading-8 tracking-[0.1px] font-montserrat">
