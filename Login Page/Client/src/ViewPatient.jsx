@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import dashboard_1 from "./assets/dashboard_1.jpeg";
 import StuLeftbar from "./StuLeftBar";
+import { Loader } from "rsuite";
 
 const ViewPatient = () => {
   const { id } = useParams();
@@ -47,7 +48,7 @@ const ViewPatient = () => {
     fetchPatient();
   }, [id]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loader size="lg" content="Loading"/>;
   if (error) return <div>Error: {error}</div>;
   if (!patient) return <div>No patient data found</div>;
 

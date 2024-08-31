@@ -62,6 +62,23 @@ const CategorySchema = new mongoose.Schema({
   Name: String,
 });
 
+const ActivitySchema = new mongoose.Schema({
+  studentId: { type: mongoose.Schema.Types.ObjectId, ref: 'students', required: true },
+  activity1: { type: String, required: true },
+  activity2: { type: String, required: true },
+  attachments: [String], // Array of strings to store file paths
+  createdAt: { type: Date, default: Date.now }
+});
+
+const GoalSchema = new mongoose.Schema({
+  studentId: { type: mongoose.Schema.Types.ObjectId, ref: 'students', required: true },
+  progress: { type: String, required: true },
+  expectation: { type: String, required: true },
+  createdAt: { type: Date, default: Date.now }
+});
+
+const Activity = mongoose.model('Activity', ActivitySchema);
+const Goal = mongoose.model('Goal', GoalSchema); // Added Goal model
 const Patient = mongoose.model('patients', PatientSchema);
 const Student = mongoose.model("students", StudentSchema);
 const Therapist = mongoose.model("therapists", TherapistSchema);
@@ -173,6 +190,84 @@ app.get('/category', async (req, res) => {
     res.json(categories);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching category' });
+  }
+});
+
+// Configure multer for activity plan attachments
+const activityStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/activities/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname));
+  }
+});
+
+const uploadActivity = multer({ storage: activityStorage });
+
+// Route to submit a new activity plan
+app.post('/activities', uploadActivity.array('attachments'), async (req, res) => {
+  const { studentId, activity1, activity2 } = req.body;
+  const attachments = req.files.map(file => `/uploads/activities/${file.filename}`);
+
+  if (!studentId || !activity1 || !activity2) {
+    return res.status(400).json({ message: 'Missing required fields' });
+  }
+
+  const newActivity = new Activity({
+    studentId,
+    activity1,
+    activity2,
+    attachments,
+  });
+
+  try {
+    await newActivity.save();
+    res.status(201).json(newActivity);
+  } catch (error) {
+    res.status(400).json({ message: 'Error saving activities', error });
+  }
+});
+
+// Route to get activity plans for a specific student
+app.get('/activities/:studentId', async (req, res) => {
+  try {
+    const activityPlans = await Activity.find({ studentId: req.params.studentId });
+    res.json(activityPlans);
+  } catch (error) {
+    res.status(500).send({ message: 'Error fetching activity plans', error });
+  }
+});
+
+// Route to submit a new goal
+app.post('/goals', async (req, res) => {
+  const { studentId, progress, expectation } = req.body;
+
+  if (!studentId || !progress || !expectation) {
+    return res.status(400).json({ message: 'Missing required fields' });
+  }
+
+  const newGoal = new Goal({
+    studentId,
+    progress,
+    expectation
+  });
+
+  try {
+    await newGoal.save();
+    res.status(201).json(newGoal);
+  } catch (error) {
+    res.status(400).json({ message: 'Error saving goal', error });
+  }
+});
+
+// Route to get goals for a specific student
+app.get('/goals/:studentId', async (req, res) => {
+  try {
+    const goals = await Goal.find({ studentId: req.params.studentId });
+    res.json(goals);
+  } catch (error) {
+    res.status(500).send({ message: 'Error fetching goals', error });
   }
 });
 

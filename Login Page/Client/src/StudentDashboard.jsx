@@ -21,6 +21,17 @@ function StudentDashboard() {
     fetchStudents();
   }, []);
 
+  const viewPatientDetails = (studentId) => {
+    // Log to check if studentId is being passed correctly
+    console.log('Storing student ID:', studentId);
+  
+    // Store the student ID in sessionStorage
+    sessionStorage.setItem('currentStudentId', studentId);
+    
+    // Navigate to the ViewPatient page
+    navigate(`/viewpatient/${studentId}`);
+  };
+
   return (
     <div className="flex h-screen bg-gray-100">
       <div className="w-64 bg-black text-white p-6 flex flex-col justify-between">
@@ -138,7 +149,7 @@ function StudentDashboard() {
                 <p>Sessions: {student.sessions}</p>
               </div>
               <div className="mt-4 flex justify-between">
-                <button onClick={() => navigate(`/viewpatient/${student._id}`)} className="bg-gray-200 text-black px-4 py-2 rounded-3xl">
+                <button onClick={() => viewPatientDetails(student._id)} className="bg-gray-200 text-black px-4 py-2 rounded-3xl">
                   View Details
                 </button>
                 <button className="bg-red-500 text-white px-4 py-2 rounded-3xl">
