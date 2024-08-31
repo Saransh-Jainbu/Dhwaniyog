@@ -133,16 +133,16 @@ function TherapistDashboard() {
               <h3 className="text-center mt-4 text-lg font-semibold">
                 {patient.firstName} {patient.lastName}
               </h3>
-              <p className="text-center text-gray-500">{patient.problem}</p>
+              <p className="text-center text-gray-500">{patient.category}</p>
               <div className="flex flex-row mt-4 text-center gap-2">
                 <p>Sessions: {patient.sessions}</p>
                 <VerticalLine />
                 <p>Case Status: {patient.status}</p>
                 <VerticalLine />
-                <p>Allotted To: {patient.assignedTo}</p>
+                <p>Allotted To: {patient.appointTo}</p>
               </div>
               <div className="mt-4 flex justify-between">
-                <button className="bg-gray-200 text-black px-4 py-2 rounded-3xl">
+                <button onClick={() => navigate("/activityplans")} className="bg-gray-200 text-black px-4 py-2 rounded-3xl">
                   View Case
                 </button>
                 <button className="bg-red-500 text-white px-4 py-2 rounded-3xl">
