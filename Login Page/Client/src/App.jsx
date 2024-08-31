@@ -18,7 +18,6 @@ import ViewPatient from "./ViewPatient";
 import Logout from "./Logout";
 import Contact from "./Contact";
 
-
 function App() {
   return (
     <Router>
@@ -36,10 +35,9 @@ function App() {
         <Route path="/goals" element={<Goals/>} />
         <Route path="/studentgoals" element={<StudentGoals/>} />
         <Route path="/studentactivityplans" element={<StudentActivityPlans/>} />
-        <Route path="/viewpatient" element={<ViewPatient/>} />
+        <Route path="/viewpatient/:id" element={<ViewPatient />} />
         <Route path="/logout" element={<Logout/>} />
         <Route path="/contact" element={<Contact/>} />
-
       </Routes>
     </Router>
   );

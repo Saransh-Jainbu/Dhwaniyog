@@ -21,8 +21,7 @@ mongoose.connect(process.env.MONGO_URI)
     console.error('Connection error', err);
   });
 
-
-// Define schema and model
+// Define schemas and models
 const PatientSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
@@ -31,11 +30,11 @@ const PatientSchema = new mongoose.Schema({
   email: String,
   address: String,
   contactNumber: String,
-  appointTo: String,  
-  appointBy: String,  
+  appointTo: String,
+  appointBy: String,
   category: String,
   problem: String,
-  sessions: {Number, default:0},
+  sessions: { type: Number, default: 0 }, // Corrected this line
   status: String,
   image: [String],  // Store multiple images as an array of strings (paths)
   additionalImage: String,  // Store additional image as a string (path)
@@ -45,31 +44,27 @@ const StudentSchema = new mongoose.Schema({
   name: String,
   email: String,
   supervisior: String,
-  problem: String,    
-  sessions: Number,   
-  status: String,     
-  assignedTo: String, 
-  image: [String],    
+  problem: String,
+  sessions: Number,
+  status: String,
+  assignedTo: String,
+  image: [String],
 });
-
-
-const Student = mongoose.model("students", StudentSchema);
-
-const Patient = mongoose.model('patients', PatientSchema);
 
 const TherapistSchema = new mongoose.Schema({
   Name: String,
   email: String,
-  super1visor: String,
-  totalSessions: Number
+  supervisor: String,
+  totalSessions: Number,
 });
-
-const Therapist = mongoose.model("therapist", TherapistSchema);
 
 const CategorySchema = new mongoose.Schema({
-  Name: String
+  Name: String,
 });
 
+const Patient = mongoose.model('patients', PatientSchema);
+const Student = mongoose.model("students", StudentSchema);
+const Therapist = mongoose.model("therapists", TherapistSchema);
 const Category = mongoose.model('category', CategorySchema);
 
 // Configure multer for file uploads
@@ -103,7 +98,7 @@ app.post('/addpatient', upload.fields([{ name: 'image' }, { name: 'additionalIma
   const patient = new Patient({
     ...body,
     image: imagePaths,
-    additionalImage: additionalImagePath
+    additionalImage: additionalImagePath,
   });
 
   try {
@@ -114,6 +109,34 @@ app.post('/addpatient', upload.fields([{ name: 'image' }, { name: 'additionalIma
   }
 });
 
+// Get patient by ID
+app.get('/patients/:id', async (req, res) => {
+  console.log('Fetching patient with ID:', req.params.id);
+  try {
+    const patient = await Patient.findById(req.params.id);
+    if (!patient) {
+      return res.status(404).json({ message: 'Patient not found' });
+    }
+    res.json(patient);
+  } catch (error) {
+    console.error('Error fetching patient details:', error);
+    res.status(500).json({ message: 'Error fetching patient details', error: error.message });
+  }
+});
+
+app.get('/students/:id', async (req, res) => {
+  try {
+    const student = await Student.findById(req.params.id);
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+    res.json(student);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching student details', error: error.message });
+  }
+});
+
+// Get all patients
 app.get('/patients', async (req, res) => {
   try {
     const patients = await Patient.find();
@@ -123,20 +146,31 @@ app.get('/patients', async (req, res) => {
   }
 });
 
-
-app.get('/therapist', async (req, res) => {
+// Get all students
+app.get('/students', async (req, res) => {
   try {
-    const therapist = await Therapist.find();
-    res.json(therapist);
+    const students = await Student.find();
+    res.json(students);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching students' });
+  }
+});
+
+// Get all therapists
+app.get('/therapists', async (req, res) => {
+  try {
+    const therapists = await Therapist.find();
+    res.json(therapists);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching therapists' });
   }
 });
 
+// Get all categories
 app.get('/category', async (req, res) => {
   try {
-    const category = await Category.find();
-    res.json(category);
+    const categories = await Category.find();
+    res.json(categories);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching category' });
   }

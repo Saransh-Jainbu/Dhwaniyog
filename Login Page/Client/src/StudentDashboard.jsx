@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import VerticalLine from "./VerticalLine";
-import axios from 'axios'; // Ensure axios is imported
+import axios from 'axios';
 
 function StudentDashboard() {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ function StudentDashboard() {
     const fetchStudents = async () => {
       try {
         const response = await axios.get('http://localhost:5000/students');
-        console.log(response.data);  // Add this line to see if the request returns data
+        console.log(response.data);
         setStudents(response.data);
       } catch (error) {
         console.error("Error fetching students:", error);
@@ -20,11 +20,9 @@ function StudentDashboard() {
   
     fetchStudents();
   }, []);
-  
 
   return (
     <div className="flex h-screen bg-gray-100">
-      {/* Sidebar */}
       <div className="w-64 bg-black text-white p-6 flex flex-col justify-between">
         <div>
           <button onClick={() => navigate("/")} className="text-xl font-bold mb-8">DHWANIयोग</button>
@@ -50,7 +48,6 @@ function StudentDashboard() {
         </div>
       </div>
 
-      {/* Main Content */}
       <div className="flex-grow p-6 overflow-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Students</h2>
@@ -113,45 +110,44 @@ function StudentDashboard() {
           </div>
         </div>
 
-        {/* Students Grid */}
         <div className="grid grid-cols-4 gap-6">
-  {students.map((student, index) => (
-    <div key={index} className="bg-white p-4 rounded-2xl shadow">
-      <div className="flex justify-center">
-        {student.image && student.image.length > 0 ? (
-          <img
-            className="w-16 h-16 rounded-full"
-            src={`http://localhost:5000${student.image[0]}`}  // Ensure the URL is correct
-            alt={student.name}
-          />
-        ) : (
-          <div className="w-16 h-16 rounded-full bg-gray-300 flex items-center justify-center">
-            {/* Placeholder for when no image is available */}
-          </div>
-        )}
-      </div>
-      <h3 className="text-center mt-4 text-lg font-semibold">
-        {student.Name}
-      </h3>
-      <p className="text-center text-gray-500">{student.email}</p>
-      <div className="flex flex-row mt-4 text-center gap-2">
-        <p>Supervisor: {student.supervisior}</p>
-        <VerticalLine />
-        <p>Status: {student.status}</p>
-        <VerticalLine />
-        <p>Sessions: {student.sessions}</p>
-      </div>
-      <div className="mt-4 flex justify-between">
-        <button onClick={() => navigate("/viewstudent")} className="bg-gray-200 text-black px-4 py-2 rounded-3xl">
-          View Details
-        </button>
-        <button className="bg-red-500 text-white px-4 py-2 rounded-3xl">
-          Edit
-        </button>
-      </div>
-    </div>
-  ))}
-</div>
+          {students.map((student, index) => (
+            <div key={index} className="bg-white p-4 rounded-2xl shadow">
+              <div className="flex justify-center">
+                {student.image && student.image.length > 0 ? (
+                  <img
+                    className="w-16 h-16 rounded-full"
+                    src={`http://localhost:5000${student.image[0]}`}  
+                    alt={student.name}
+                  />
+                ) : (
+                  <div className="w-16 h-16 rounded-full bg-gray-300 flex items-center justify-center">
+                    {/* Placeholder for when no image is available */}
+                  </div>
+                )}
+              </div>
+              <h3 className="text-center mt-4 text-lg font-semibold">
+                {student.name}
+              </h3>
+              <p className="text-center text-gray-500">{student.email}</p>
+              <div className="flex flex-row mt-4 text-center gap-2">
+                <p>Supervisor: {student.supervisior}</p>
+                <VerticalLine />
+                <p>Status: {student.status}</p>
+                <VerticalLine />
+                <p>Sessions: {student.sessions}</p>
+              </div>
+              <div className="mt-4 flex justify-between">
+                <button onClick={() => navigate(`/viewpatient/${student._id}`)} className="bg-gray-200 text-black px-4 py-2 rounded-3xl">
+                  View Details
+                </button>
+                <button className="bg-red-500 text-white px-4 py-2 rounded-3xl">
+                  Edit
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
 
       </div>
     </div>
