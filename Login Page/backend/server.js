@@ -9,7 +9,6 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-// Load environment variables from .env file
 require('dotenv').config();
 
 // MongoDB connection
@@ -21,7 +20,6 @@ mongoose.connect(process.env.MONGO_URI)
     console.error('Connection error', err);
   });
 
-// Define schemas and models
 const PatientSchema = new mongoose.Schema({
   firstName: String,
   lastName: String,
@@ -34,10 +32,10 @@ const PatientSchema = new mongoose.Schema({
   appointBy: String,
   category: String,
   problem: String,
-  sessions: { type: Number, default: 0 }, // Corrected this line
+  sessions: { type: Number, default: 0 }, 
   status: String,
-  image: [String],  // Store multiple images as an array of strings (paths)
-  additionalImage: String,  // Store additional image as a string (path)
+  image: [String],  
+  additionalImage: String,  
 });
 
 const StudentSchema = new mongoose.Schema({
@@ -84,7 +82,6 @@ const Student = mongoose.model("students", StudentSchema);
 const Therapist = mongoose.model("therapists", TherapistSchema);
 const Category = mongoose.model('category', CategorySchema);
 
-// Configure multer for file uploads
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'uploads/');
@@ -96,7 +93,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// Handle POST request for adding patients
 app.post('/addpatient', upload.fields([{ name: 'image' }, { name: 'additionalImage' }]), async (req, res) => {
   const { body, files } = req;
 
@@ -111,7 +107,6 @@ app.post('/addpatient', upload.fields([{ name: 'image' }, { name: 'additionalIma
     additionalImagePath = `/uploads/${files.additionalImage[0].filename}`;
   }
 
-  // Create new patient with form data and image paths
   const patient = new Patient({
     ...body,
     image: imagePaths,
@@ -126,7 +121,6 @@ app.post('/addpatient', upload.fields([{ name: 'image' }, { name: 'additionalIma
   }
 });
 
-// Get patient by ID
 app.get('/patients/:id', async (req, res) => {
   console.log('Fetching patient with ID:', req.params.id);
   try {
@@ -153,7 +147,6 @@ app.get('/students/:id', async (req, res) => {
   }
 });
 
-// Get all patients
 app.get('/patients', async (req, res) => {
   try {
     const patients = await Patient.find();
@@ -163,7 +156,6 @@ app.get('/patients', async (req, res) => {
   }
 });
 
-// Get all students
 app.get('/students', async (req, res) => {
   try {
     const students = await Student.find();
@@ -173,7 +165,6 @@ app.get('/students', async (req, res) => {
   }
 });
 
-// Get all therapists
 app.get('/therapists', async (req, res) => {
   try {
     const therapists = await Therapist.find();
@@ -183,7 +174,6 @@ app.get('/therapists', async (req, res) => {
   }
 });
 
-// Get all categories
 app.get('/category', async (req, res) => {
   try {
     const categories = await Category.find();
@@ -193,7 +183,6 @@ app.get('/category', async (req, res) => {
   }
 });
 
-// Configure multer for activity plan attachments
 const activityStorage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'uploads/activities/');
@@ -205,7 +194,6 @@ const activityStorage = multer.diskStorage({
 
 const uploadActivity = multer({ storage: activityStorage });
 
-// Route to submit a new activity plan
 app.post('/activities', uploadActivity.array('attachments'), async (req, res) => {
   const { studentId, activity1, activity2 } = req.body;
   const attachments = req.files.map(file => `/uploads/activities/${file.filename}`);
@@ -229,7 +217,6 @@ app.post('/activities', uploadActivity.array('attachments'), async (req, res) =>
   }
 });
 
-// Route to get activity plans for a specific student
 app.get('/activities/:studentId', async (req, res) => {
   try {
     const activityPlans = await Activity.find({ studentId: req.params.studentId });
@@ -239,7 +226,6 @@ app.get('/activities/:studentId', async (req, res) => {
   }
 });
 
-// Route to submit a new goal
 app.post('/goals', async (req, res) => {
   const { studentId, progress, expectation } = req.body;
 
@@ -261,7 +247,6 @@ app.post('/goals', async (req, res) => {
   }
 });
 
-// Route to get goals for a specific student
 app.get('/goals/:studentId', async (req, res) => {
   try {
     const goals = await Goal.find({ studentId: req.params.studentId });
@@ -271,8 +256,6 @@ app.get('/goals/:studentId', async (req, res) => {
   }
 });
 
-// Serve static files from the uploads directory
 app.use('/uploads', express.static('uploads'));
 
-// Start the server
 app.listen(5000, () => console.log('Server running on port 5000'));
