@@ -75,10 +75,10 @@ const ViewPatient = () => {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="border p-2 rounded">
-                <span className="text-gray-600 font-normal text-sm">Gender:</span> {patient.gender || "N/A"}
+                <span className="text-gray-600 font-normal text-sm">Age:</span> {patient.age || "N/A"}
               </div>
               <div className="border p-2 rounded">
-              <span className="text-gray-600 font-normal text-sm">Age:</span> {patient.age || "N/A"}
+              <span className="text-gray-600 font-normal text-sm">Sessions:</span> {patient.sessions || "N/A"}
               </div>
             </div>
 
