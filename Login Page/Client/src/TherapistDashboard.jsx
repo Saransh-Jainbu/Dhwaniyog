@@ -149,7 +149,8 @@ function TherapistDashboard() {
               <div className="flex flex-row mt-4 text-center gap-2 font-bold justify-evenly">
                 <p> <span className="font-normal">Sessions:</span><br></br> {patient.sessions}</p>
                 <VerticalLine />
-                <p><span className="font-normal">Case Status:</span><br></br> {patient.status}</p>
+                {/* patient.status */}
+                <p><span className="font-normal">Case Status:</span><br></br> {"Pending"}</p>
                 <VerticalLine />
                 <p><span className="font-normal ">Allotted To:</span><br></br>{patient.appointTo}</p>
               </div>
