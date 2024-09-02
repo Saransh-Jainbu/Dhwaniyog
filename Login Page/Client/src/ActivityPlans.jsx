@@ -17,7 +17,7 @@ const ActivityPlans = () => {
                 <button className="font-montserrat p-2 font-semibold text-lg bg-red-500 w-auto rounded-3xl text-white ">View Attachments</button>
               </div>
               <div className="mb-4 font-normal ml-4 text-[16px] text-slate-600 font-roboto ">
-                Try to twist tongue
+              Yet To Add
               </div>
             </div>
 
@@ -25,7 +25,7 @@ const ActivityPlans = () => {
             <div className="font-bold text-xl mt-8">
               Activity 2:
               <div className="mt-4 font-normal ml-4 text-[16px] text-slate-600 font-roboto">
-                Try to twist tongue
+                Yet To Add
               </div>
             </div>
           </div>

@@ -117,7 +117,6 @@ const AddPatient = () => {
       toast.success("Patient added successfully!");
       console.log(response.data);
 
-      // Clear the form data after successful submission
       setFormData({
         firstName: "",
         lastName: "",
