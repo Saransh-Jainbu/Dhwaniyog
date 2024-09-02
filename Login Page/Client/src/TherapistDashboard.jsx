@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import VerticalLine from "./VerticalLine";
 import axios from "axios";
+import { ToastContainer , toast } from "react-toastify";
 
 function TherapistDashboard() {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ function TherapistDashboard() {
       try {
         const response = await axios.get("http://localhost:5000/patients");
         setPatients(response.data);
+      
       } catch (error) {
         console.error("Error fetching patients:", error);
       }
