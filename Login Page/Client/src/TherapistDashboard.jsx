@@ -7,13 +7,25 @@ import { ToastContainer , toast } from "react-toastify";
 function TherapistDashboard() {
   const navigate = useNavigate();
   const [patients, setPatients] = useState([]);
-  const [searchQuery, setSearchQuery] = useState(""); // Search query state
-  const [selectedCategory, setSelectedCategory] = useState("All"); // Selected category state
+  const [searchQuery, setSearchQuery] = useState(""); 
+  const [selectedCategory, setSelectedCategory] = useState("All"); 
+
+  const getEnvVariable = (key, defaultValue) => {
+    if (typeof process !== 'undefined' && process.env && process.env[key]) {
+      return process.env[key];
+    }
+    if (typeof window !== 'undefined' && window._env_ && window._env_[key]) {
+      return window._env_[key];
+    }
+    return defaultValue;
+  };
+
+  const apiUrl = getEnvVariable('REACT_APP_API_URL','http://localhost:5000');
 
   useEffect(() => {
     const fetchPatients = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/patients");
+        const response = await axios.get(`${apiUrl}/patients`);
         setPatients(response.data);
       
       } catch (error) {
@@ -28,7 +40,6 @@ function TherapistDashboard() {
     window.location.reload();
   };
 
-  // Filter patients based on search query and selected category
   const filteredPatients = patients.filter((patient) => {
     const matchesSearchQuery = `${patient.firstName} ${patient.lastName}`
       .toLowerCase()
@@ -217,3 +228,6 @@ function TherapistDashboard() {
 }
 
 export default TherapistDashboard;
+
+
+

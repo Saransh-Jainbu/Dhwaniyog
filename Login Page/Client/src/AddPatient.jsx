@@ -8,31 +8,41 @@ const AddPatient = () => {
   const [therapistOptions, setTherapistOptions] = useState([]);
   const [categoryOptions, setcategoryOptions] = useState([]);
 
+  const getEnvVariable = (key, defaultValue) => {
+    if (typeof process !== 'undefined' && process.env && process.env[key]) {
+      return process.env[key];
+    }
+    if (typeof window !== 'undefined' && window._env_ && window._env_[key]) {
+      return window._env_[key];
+    }
+    return defaultValue;
+  };
+
+  const apiUrl = getEnvVariable('REACT_APP_API_URL' , 'http://localhost:5000/');
+
   useEffect(() => {
     const fetchTherapists = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/therapists");
+        const response = await axios.get(`${apiUrl}/therapists`);
         setTherapistOptions(response.data);
       } catch (error) {
         console.error("Error fetching therapists", error);
       }
     };
-
     fetchTherapists();
-  }, []);
+  }, [apiUrl]);
 
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/category");
+        const response = await axios.get(`${apiUrl}/category`);
         setcategoryOptions(response.data);
       } catch (error) {
         console.error("Error fetching category", error);
       }
     };
-
     fetchCategory();
-  }, []);
+  }, [apiUrl]);
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -110,10 +120,7 @@ const AddPatient = () => {
       }
     }
     try {
-      const response = await axios.post(
-        "http://localhost:5000/addpatient",
-        data
-      );
+      const response = await axios.post(`${apiUrl}/addpatient`, data);
       toast.success("Patient added successfully!");
       console.log(response.data);
 
@@ -305,70 +312,83 @@ const AddPatient = () => {
               >
                 <option value="">Appoint To</option>
                 {therapistOptions.map((therapist) => (
-                  <option key={therapist._id} value={therapist.Name}>
-                    {therapist.Name}
+                  <option key={therapist.id} value={therapist.id}>
+                    {therapist.name}
                   </option>
                 ))}
               </select>
-
               <select
                 name="category"
                 className="border p-2 rounded"
                 value={formData.category}
                 onChange={handleChange}
               >
-                <option value="">Category</option>
+                <option value="">Select Category</option>
                 {categoryOptions.map((category) => (
-                  <option key={category._id} value={category.Name}>
-                    {category.Name}
+                  <option key={category.id} value={category.id}>
+                    {category.name}
                   </option>
                 ))}
               </select>
             </div>
             <textarea
               name="problem"
-              placeholder="Problem"
-              className="border p-2 rounded w-full h-24"
+              placeholder="Problem Description"
+              className="border p-2 rounded w-full"
               value={formData.problem}
               onChange={handleChange}
-            ></textarea>
-
+            />
+            <input
+              type="number"
+              name="sessions"
+              placeholder="Number of Sessions"
+              className="border p-2 rounded w-full"
+              value={formData.sessions}
+              onChange={handleChange}
+            />
+            <select
+              name="status"
+              className="border p-2 rounded w-full"
+              value={formData.status}
+              onChange={handleChange}
+            >
+              <option value="">Select Status</option>
+              <option value="Ongoing">Ongoing</option>
+              <option value="Completed">Completed</option>
+            </select>
             <div>
-              <span className="font-montserrat font-semibold">
-                Upload relevant documents (if any)
-              </span>
+              <label className="block font-medium">Upload Files:</label>
               <input
                 type="file"
                 name="image"
                 onChange={handleChange}
                 multiple
-                className="border p-2 rounded w-full mt-2"
+                className="block border rounded p-2 w-full"
               />
-              <div className="flex flex-wrap mt-4">
-                {imagePreview.map((file, index) => (
-                  <div key={index} className="relative w-24 h-24 mr-12 mb-2">
-                    {file.type === "image" ? (
+              <div className="flex flex-wrap gap-2 mt-2">
+                {imagePreview.map((preview, index) => (
+                  <div key={index} className="relative w-32 h-32">
+                    {preview.type === "image" ? (
                       <img
-                        src={file.url}
-                        alt="Preview"
+                        src={preview.url}
+                        alt={`Preview ${index}`}
                         className="w-full h-full object-cover rounded"
                       />
-                    ) : file.type === "pdf" ? (
+                    ) : preview.type === "pdf" ? (
                       <div className="flex items-center justify-center h-full">
-                        <span className="text-xs font-montserrat font-bold">
-                          {file.name}
-                        </span>
+                        <span className="text-red-500">PDF File</span>
+                        <span className="text-xs">{preview.name}</span>
                       </div>
                     ) : (
                       <div className="flex items-center justify-center h-full">
                         <span className="text-gray-500">File</span>
-                        <span className="text-xs">{file.name}</span>
+                        <span className="text-xs">{preview.name}</span>
                       </div>
                     )}
                     <button
                       type="button"
                       onClick={() => removeImagePreview(index)}
-                      className="absolute top-0 right-0 bg-red-500 text-white rounded-full px-2 py-1"
+                      className="absolute top-1 right-1 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-700 transition-all duration-200 ease-in-out"
                     >
                       X
                     </button>
@@ -376,12 +396,11 @@ const AddPatient = () => {
                 ))}
               </div>
             </div>
-
             <button
               type="submit"
-              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+              className="block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-all duration-200 ease-in-out"
             >
-              Add User
+              Add Patient
             </button>
           </form>
         </div>

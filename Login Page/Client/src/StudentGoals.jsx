@@ -4,10 +4,21 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+const getEnvVariable = (key, defaultValue) => {
+  if (typeof process !== 'undefined' && process.env && process.env[key]) {
+    return process.env[key];
+  }
+  if (typeof window !== 'undefined' && window._env_ && window._env_[key]) {
+    return window._env_[key];
+  }
+  return defaultValue;
+};
+
 const StudentGoals = () => {
   const [progress, setProgress] = useState('');
   const [expectation, setExpectation] = useState('');
   const [studentId, setStudentId] = useState(null);
+  const apiUrl = getEnvVariable('REACT_APP_API_URL', 'http://localhost:5000');
 
   useEffect(() => {
     const id = sessionStorage.getItem('currentStudentId');
@@ -34,7 +45,7 @@ const StudentGoals = () => {
 
     try {
       console.log('Submitting goals...');
-      const response = await axios.post('http://localhost:5000/goals', goalData);
+      const response = await axios.post(`${apiUrl}/goals`, goalData);
 
       if (response.status === 201) {
         toast.success('Goals submitted successfully!');
@@ -50,47 +61,47 @@ const StudentGoals = () => {
   };
 
   return (
-    <>
-      <div className="flex">
-        <StuLeftbar />
-        <div className="flex flex-col p-2 mt-12 w-[850px] ml-[380px] ">
-          <span className="font-roboto font-bold text-3xl">Goals</span>
+    <div className="flex">
+      <StuLeftbar />
+      <div className="flex flex-col p-2 mt-12 w-[850px] ml-[380px]">
+        <span className="font-roboto font-bold text-3xl">Goals</span>
 
-          <div className="flex flex-col ml-4 mt-16">
-            <span className="font-roboto font-bold text-xl">Progress</span>
-          </div>
-          <textarea
-            type="text"
-            placeholder="Type your progress here"
-            className="border-2 p-4 mt-4 h-[20vh] w-[70vh] mb-2"
-            value={progress}
-            onChange={(e) => setProgress(e.target.value)}
-          ></textarea>
+        <div className="flex flex-col ml-4 mt-16">
+          <span className="font-roboto font-bold text-xl">Progress</span>
+        </div>
+        <textarea
+          placeholder="Type your progress here"
+          className="border-2 p-4 mt-4 h-[20vh] w-[70vh] mb-2"
+          value={progress}
+          onChange={(e) => setProgress(e.target.value)}
+        ></textarea>
 
-          <div className="flex flex-col ml-4 mt-8">
-            <span className="font-roboto font-bold text-xl">Expectation</span>
-          </div>
-          <textarea
-            type="text"
-            placeholder="Type your expectations here"
-            className="border-2 p-4 mt-4 h-[20vh] w-[70vh] mb-8"
-            value={expectation}
-            onChange={(e) => setExpectation(e.target.value)}
-          ></textarea>
+        <div className="flex flex-col ml-4 mt-8">
+          <span className="font-roboto font-bold text-xl">Expectation</span>
+        </div>
+        <textarea
+          placeholder="Type your expectations here"
+          className="border-2 p-4 mt-4 h-[20vh] w-[70vh] mb-8"
+          value={expectation}
+          onChange={(e) => setExpectation(e.target.value)}
+        ></textarea>
 
-          <div className="flex justify-between gap-20">
-            <button className="font-montserrat p-2 font-semibold text-lg bg-red-500 w-auto rounded-3xl text-white pr-4 pl-4">Add Attachments</button>
-            <button className="font-montserrat p-2 font-semibold text-lg bg-red-500 w-auto rounded-3xl text-white pr-4 pl-4">Add Activity</button>
-            <button
-              onClick={handleSubmit}
-              className="bg-blue-950 p-2 text-white font-montserrat font-semibold rounded-3xl w-[120px]"
-            >
-              Submit
-            </button>
-          </div>
+        <div className="flex justify-between gap-20">
+          <button className="font-montserrat p-2 font-semibold text-lg bg-red-500 w-auto rounded-3xl text-white pr-4 pl-4">
+            Add Attachments
+          </button>
+          <button className="font-montserrat p-2 font-semibold text-lg bg-red-500 w-auto rounded-3xl text-white pr-4 pl-4">
+            Add Activity
+          </button>
+          <button
+            onClick={handleSubmit}
+            className="bg-blue-950 p-2 text-white font-montserrat font-semibold rounded-3xl w-[120px]"
+          >
+            Submit
+          </button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

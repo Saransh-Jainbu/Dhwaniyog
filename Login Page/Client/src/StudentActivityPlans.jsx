@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import StuLeftbar from './StuLeftBar';
 import axios from 'axios';
-import { toast , ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const StudentActivityPlans = () => {
@@ -9,6 +9,18 @@ const StudentActivityPlans = () => {
   const [activity2, setActivity2] = useState('');
   const [attachments, setAttachments] = useState([]);
   const [studentId, setStudentId] = useState(null);
+
+  const getEnvVariable = (key, defaultValue) => {
+    if (typeof process !== 'undefined' && process.env && process.env[key]) {
+      return process.env[key];
+    }
+    if (typeof window !== 'undefined' && window._env_ && window._env_[key]) {
+      return window._env_[key];
+    }
+    return defaultValue;
+  };
+
+  const apiUrl = getEnvVariable('REACT_APP_API_URL', 'http://localhost:5000');
 
   useEffect(() => {
     const id = sessionStorage.getItem('currentStudentId');
@@ -42,7 +54,7 @@ const StudentActivityPlans = () => {
 
     try {
       console.log('Submitting activity plan...');
-      const response = await axios.post('http://localhost:5000/activities', formData, {
+      const response = await axios.post(`${apiUrl}/activities`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 

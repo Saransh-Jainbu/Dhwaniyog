@@ -11,6 +11,18 @@ const ViewPatient = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const getEnvVariable = (key, defaultValue) => {
+    if (typeof process !== 'undefined' && process.env && process.env[key]) {
+      return process.env[key];
+    }
+    if (typeof window !== 'undefined' && window._env_ && window._env_[key]) {
+      return window._env_[key];
+    }
+    return defaultValue;
+  };
+
+  const apiUrl = getEnvVariable('REACT_APP_API_URL' , 'http://localhost:5000');
+
   useEffect(() => {
     const fetchPatient = async () => {
       console.log("Fetching patient with ID:", id);
@@ -21,10 +33,9 @@ const ViewPatient = () => {
         return;
       }
 
-      try {
-        const url = `http://localhost:5000/students/${id}`;
-        console.log("Making API request to:", url);
-        const response = await axios.get(url);
+      try {  
+        const response = await axios.get(`${apiUrl}/students/${id}`);
+        
         console.log("API response:", response.data);
         setPatient(response.data);
       } catch (error) {
@@ -46,7 +57,7 @@ const ViewPatient = () => {
     };
 
     fetchPatient();
-  }, [id]);
+  }, [id,apiUrl]);
 
   if (loading) return <Loader size="lg" content="Loading"/>;
   if (error) return <div>Error: {error}</div>;
