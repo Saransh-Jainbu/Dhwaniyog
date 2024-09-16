@@ -9,10 +9,22 @@ function StudentDashboard() {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortCriteria, setSortCriteria] = useState("all");
 
+  const getEnvVariable = (key, defaultValue) => {
+    if (typeof process !== 'undefined' && process.env && process.env[key]) {
+      return process.env[key];
+    }
+    if (typeof window !== 'undefined' && window._env_ && window._env_[key]) {
+      return window._env_[key];
+    }
+    return defaultValue;
+  };
+
+  const apiUrl = getEnvVariable('REACT_APP_API_URL' , 'http://localhost:5000');
+
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/students");
+        const response = await axios.get(`${apiUrl}/students`);
         console.log(response.data);
         setStudents(response.data);
       } catch (error) {
@@ -21,7 +33,7 @@ function StudentDashboard() {
     };
 
     fetchStudents();
-  }, []);
+  }, [apiUrl]);
 
   const handleRefresh = () => {
     window.location.reload();
@@ -101,9 +113,7 @@ function StudentDashboard() {
       <div className="flex-grow p-6 overflow-auto">
         <div className="flex justify-center items-center mb-6">
           <h2 className="text-2xl font-bold text-3xl ">Patients</h2>
-          <div className="flex items-center space-x-4">
-            
-          </div>
+          <div className="flex items-center space-x-4"></div>
         </div>
 
         <div className="flex justify-between items-center mb-6">
@@ -120,7 +130,6 @@ function StudentDashboard() {
             />
           </div>
           <div className="flex items-center space-x-4">
-          
             <button
               onClick={handleRefresh}
               className="bg-white text-black px-4 py-2 rounded border border-gray-300"
@@ -155,7 +164,7 @@ function StudentDashboard() {
                 {student.image && student.image.length > 0 ? (
                   <img
                     className="w-16 h-16 rounded-full"
-                    src={`http://localhost:5000${student.image[0]}`}
+                    src={`${apiUrl}${student.image[0]}`}
                     alt={student.Name}
                   />
                 ) : (

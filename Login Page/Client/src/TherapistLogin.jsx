@@ -12,7 +12,6 @@ function StuLogin() {
     const [password, setPassword] = useState("");
 
     const handleSubmit = async (e) => {
-        // e.preventDefault();
         if (!email || !password) {
             console.log("Email or password cannot be empty.");
             return;
