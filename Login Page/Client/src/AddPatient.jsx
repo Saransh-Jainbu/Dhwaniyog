@@ -1,41 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import dashboard_1 from "./assets/dashboard_1.jpeg";
 import axios from "axios";
 import Leftbar from "./Leftbar";
 import { ToastContainer, toast } from "react-toastify";
+import { useEffect } from "react";
+
+const apiUrl =
+  import.meta.env.VITE_API_URL || 
+  (import.meta.env.DEV ? "http://localhost:5000" : "");
 
 const AddPatient = () => {
   const [therapistOptions, setTherapistOptions] = useState([]);
   const [categoryOptions, setcategoryOptions] = useState([]);
-
-const apiUrl =
-  import.meta.env.VITE_API_URL || 
-  (import.meta.env.DEV ? "http://localhost:5000" : ""); // localhost only in dev mode
-
-  useEffect(() => {
-    const fetchTherapists = async () => {
-      try {
-        const response = await axios.get(`${apiUrl}/therapists`);
-        setTherapistOptions(response.data);
-      } catch (error) {
-        console.error("Error fetching therapists", error);
-      }
-    };
-    fetchTherapists();
-  }, [apiUrl]);
-
-  useEffect(() => {
-    const fetchCategory = async () => {
-      try {
-        const response = await axios.get(`${apiUrl}/category`);
-        setcategoryOptions(response.data);
-      } catch (error) {
-        console.error("Error fetching category", error);
-      }
-    };
-    fetchCategory();
-  }, [apiUrl]);
-
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -49,7 +25,6 @@ const apiUrl =
     category: "",
     problem: "",
     sessions: 0,
-    status: "",
     image: [],
     additionalImage: [],
   });
@@ -79,10 +54,7 @@ const apiUrl =
     } else if (e.target.name === "additionalImage") {
       const file = e.target.files[0];
       if (file.type.startsWith("image/")) {
-        setAdditionalImagePreview({
-          type: "image",
-          url: URL.createObjectURL(file),
-        });
+        setAdditionalImagePreview({ type: "image", url: URL.createObjectURL(file) });
       } else if (file.type === "application/pdf") {
         setAdditionalImagePreview({ type: "pdf", name: file.name });
       } else {
@@ -116,6 +88,7 @@ const apiUrl =
       toast.success("Patient added successfully!");
       console.log(response.data);
 
+      // Clear the form data after successful submission
       setFormData({
         firstName: "",
         lastName: "",
@@ -129,7 +102,6 @@ const apiUrl =
         category: "",
         problem: "",
         sessions: 0,
-        status: "",
         image: [],
         additionalImage: [],
       });
@@ -141,6 +113,30 @@ const apiUrl =
       console.error("Error adding patient:", error);
     }
   };
+
+  useEffect(() => {
+    const fetchTherapists = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}/therapists`);
+        setTherapistOptions(response.data);
+      } catch (error) {
+        console.error("Error fetching therapists", error);
+      }
+    };
+    fetchTherapists();
+  }, [apiUrl]);
+
+  useEffect(() => {
+    const fetchCategory = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}/category`);
+        setcategoryOptions(response.data);
+      } catch (error) {
+        console.error("Error fetching category", error);
+      }
+    };
+    fetchCategory();
+  }, [apiUrl]);
 
   const removeImagePreview = (index) => {
     const updatedPreview = imagePreview.filter((_, i) => i !== index);
@@ -194,16 +190,12 @@ const apiUrl =
                   ) : additionalImagePreview.type === "pdf" ? (
                     <div className="flex items-center justify-center h-full">
                       <span className="text-red-500">PDF File</span>
-                      <span className="text-xs">
-                        {additionalImagePreview.name}
-                      </span>
+                      <span className="text-xs">{additionalImagePreview.name}</span>
                     </div>
                   ) : (
                     <div className="flex items-center justify-center h-full">
                       <span className="text-gray-500">File</span>
-                      <span className="text-xs">
-                        {additionalImagePreview.name}
-                      </span>
+                      <span className="text-xs">{additionalImagePreview.name}</span>
                     </div>
                   )}
                   <button
@@ -302,95 +294,83 @@ const apiUrl =
                 value={formData.appointTo}
                 onChange={handleChange}
               >
-                <option value="">Appoint To</option>
+              <option value="">Appoint To</option>
                 {therapistOptions.map((therapist) => (
                   <option key={therapist.id} value={therapist.id}>
-                    {therapist.name}
+                    {therapist.Name}
                   </option>
-                ))}
-              </select>
+                ))}              </select>
               <select
                 name="category"
                 className="border p-2 rounded"
                 value={formData.category}
                 onChange={handleChange}
               >
-                <option value="">Select Category</option>
+              <option value="">Select Category</option>
                 {categoryOptions.map((category) => (
                   <option key={category.id} value={category.id}>
-                    {category.name}
+                    {category.Name}
                   </option>
-                ))}
-              </select>
+                ))}              </select>
             </div>
             <textarea
               name="problem"
-              placeholder="Problem Description"
-              className="border p-2 rounded w-full"
+              placeholder="Problem"
+              className="border p-2 rounded w-full h-24"
               value={formData.problem}
               onChange={handleChange}
-            />
-            <input
-              type="number"
-              name="sessions"
-              placeholder="Number of Sessions"
-              className="border p-2 rounded w-full"
-              value={formData.sessions}
-              onChange={handleChange}
-            />
-            <select
-              name="status"
-              className="border p-2 rounded w-full"
-              value={formData.status}
-              onChange={handleChange}
-            >
-              <option value="">Select Status</option>
-              <option value="Ongoing">Ongoing</option>
-              <option value="Completed">Completed</option>
-            </select>
+            ></textarea>
+
             <div>
-              <label className="block font-medium">Upload Files:</label>
-              <input
-                type="file"
-                name="image"
-                onChange={handleChange}
-                multiple
-                className="block border rounded p-2 w-full"
-              />
-              <div className="flex flex-wrap gap-2 mt-2">
-                {imagePreview.map((preview, index) => (
-                  <div key={index} className="relative w-32 h-32">
-                    {preview.type === "image" ? (
-                      <img
-                        src={preview.url}
-                        alt={`Preview ${index}`}
-                        className="w-full h-full object-cover rounded"
-                      />
-                    ) : preview.type === "pdf" ? (
-                      <div className="flex items-center justify-center h-full">
-                        <span className="text-red-500">PDF File</span>
-                        <span className="text-xs">{preview.name}</span>
-                      </div>
-                    ) : (
-                      <div className="flex items-center justify-center h-full">
-                        <span className="text-gray-500">File</span>
-                        <span className="text-xs">{preview.name}</span>
-                      </div>
-                    )}
-                    <button
-                      type="button"
-                      onClick={() => removeImagePreview(index)}
-                      className="absolute top-1 right-1 bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-700 transition-all duration-200 ease-in-out"
-                    >
-                      X
-                    </button>
-                  </div>
-                ))}
+              <span className="font-montserrat font-semibold">
+                Upload relevant documents (if any)
+              </span>
+              <div className="space-y-2 mt-2">
+                <input
+                  type="file"
+                  name="image"
+                  onChange={handleChange}
+                  multiple
+                  className="border p-2 rounded w-full"
+                />
+                <div className="flex flex-wrap">
+                  {imagePreview.map((file, index) => (
+                    <div key={index} className="relative m-2 w-24 h-24">
+                      {file.type === "image" ? (
+                        <img
+                          src={file.url}
+                          alt="Preview"
+                          className="w-full h-full object-cover"
+                        />
+                      ) : file.type === "pdf" ? (
+                        <div className="flex items-center justify-center h-full bg-gray-100">
+                          <span className="text-red-500">PDF</span>
+                          <span className="text-xs">{preview.name}</span>
+
+                        </div>
+                      ) : (
+                        <div className="flex items-center justify-center h-full bg-gray-100">
+                          <span className="text-gray-500">File</span>
+                          <span className="text-xs">{preview.name}</span>
+
+                        </div>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => removeImagePreview(index)}
+                        className="absolute top-0 right-0 bg-red-500 text-white w-6 h-6 rounded-full flex items-center justify-center"
+                      >
+                        X
+                      </button>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
+
             <button
               type="submit"
-              className="block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition-all duration-200 ease-in-out"
+              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
             >
               Add Patient
             </button>
