@@ -4,21 +4,11 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const getEnvVariable = (key, defaultValue) => {
-  if (typeof process !== 'undefined' && process.env && process.env[key]) {
-    return process.env[key];
-  }
-  if (typeof window !== 'undefined' && window._env_ && window._env_[key]) {
-    return window._env_[key];
-  }
-  return defaultValue;
-};
-
 const StudentGoals = () => {
   const [progress, setProgress] = useState('');
   const [expectation, setExpectation] = useState('');
   const [studentId, setStudentId] = useState(null);
-  const apiUrl = getEnvVariable('REACT_APP_API_URL', 'http://localhost:5000');
+  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
   useEffect(() => {
     const id = sessionStorage.getItem('currentStudentId');
