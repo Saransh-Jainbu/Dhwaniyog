@@ -1,7 +1,30 @@
-import React from 'react'
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify'; // Make sure to import this
 
 const StuLeftbar = () => {
+  const [studentId, setStudentId] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const id = sessionStorage.getItem('currentStudentId');
+    if (id) {
+      setStudentId(id);
+    } else {
+      toast.error("No student ID found.");
+    }
+  }, []);
+
+  const viewPatientDetails = () => {
+    if (studentId) {
+      console.log("Storing student ID:", studentId);
+      sessionStorage.setItem("currentStudentId", studentId); 
+      navigate(`/viewpatient/${studentId}`);
+    } else {
+      toast.error("No student ID to view.");
+    }
+  };
+
   return (
     <>
       <div className="bg-gray-100 h-[100vh] fixed top-0 left-0 p-4 w-fit">
@@ -26,9 +49,7 @@ const StuLeftbar = () => {
           <h2 className="text-2xl font-bold mb-4 mr-16">Dashboard</h2>
         </Link>
 
-        
-        <Link
-          to="/viewpatient"
+        <button onClick={viewPatientDetails}
           className="flex mt-6 items-center text-gray-700 hover:text-black"
         >
           <svg
@@ -46,9 +67,8 @@ const StuLeftbar = () => {
             />
           </svg>
           View Patient
-        </Link> 
+        </button>
 
-        {/* Component 2 */}
         <Link
           to="/studentactivityplans"
           className="flex mt-6 items-center text-gray-700 hover:text-black"
@@ -70,7 +90,6 @@ const StuLeftbar = () => {
           Activity Plan
         </Link>
 
-        {/* Component 3 */}
         <Link
           to="/studentgoals"
           className="flex mt-6 items-center text-gray-700 hover:text-black"
@@ -93,7 +112,7 @@ const StuLeftbar = () => {
         </Link>
       </div>
     </>
-  )
+  );
 }
 
-export default StuLeftbar
+export default StuLeftbar;
