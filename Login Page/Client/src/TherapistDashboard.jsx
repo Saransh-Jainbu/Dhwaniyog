@@ -10,7 +10,9 @@ function TherapistDashboard() {
   const [searchQuery, setSearchQuery] = useState(""); 
   const [selectedCategory, setSelectedCategory] = useState("All"); 
 
-  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const apiUrl =
+  import.meta.env.VITE_API_URL || 
+  (import.meta.env.DEV ? "http://localhost:5000" : ""); // localhost only in dev mode
 
   useEffect(() => {
     const fetchPatients = async () => {
