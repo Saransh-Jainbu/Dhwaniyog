@@ -11,6 +11,25 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      !function(w, d, s, ...args){
+        var div = d.createElement('div');
+        div.id = 'aichatbot';
+        d.body.appendChild(div);
+        w.chatbotConfig = args;
+        var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s);
+        j.defer = true;
+        j.type = 'module';
+        j.src = 'https://aichatbot.sendbird.com/index.js';
+        f.parentNode.insertBefore(j, f);
+      }(window, document, 'script', 'BA5B2D4F-47F2-4873-B860-1A4727A2ED23', 'onboarding_bot', {
+        apiHost: 'https://api-cf-ap-8.sendbird.com',
+      });
+      </script>
     <script type="module" src="/src/main.jsx"></script>
+
+    
+
   </body>
 </html>
