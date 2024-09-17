@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from 'react-toastify'; // Make sure to import this
+import { toast } from 'react-toastify';
 
 const StuLeftbar = () => {
   const [studentId, setStudentId] = useState(null);
